@@ -1,0 +1,18 @@
+
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    display: inline-block;
+    width: auto;
+    background-color: transparent;
+}
+.css-f4h6uy:hover, .css-f4h6uy[data-hover] {
+    text-decoration: none !important;
+}
+
+div.react-datepicker-wrapper.customDatePickerWidth,
+div.react-datepicker-wrapper.customDatePickerWidth > .react-datepicker__input-container,
+div.react-datepicker-wrapper.customDatePickerWidth > .react-datepicker__input-container input {
+    width: 100%;
+ }
