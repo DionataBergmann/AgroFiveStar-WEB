@@ -1,0 +1,15 @@
+query getFields($filter: FieldFilter $sorting: [FieldSort!] $paging: OffsetPaging) {
+  fields(filter: $filter sorting: $sorting paging: $paging) {
+
+    nodes {
+      id
+      name
+      acre
+      imageUrl
+      }
+ 
+    
+ 
+}
+}
+
