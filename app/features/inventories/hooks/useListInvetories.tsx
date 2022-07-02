@@ -1,17 +1,17 @@
 import {
-  FieldSortFields,
+  InventorySortFields,
   SortDirection,
   SortNulls,
 } from '@app/generated/graphql'
 
-import { useGetFieldsQuery } from '../graphql/queries.generated'
+import { useGetInventoriesQuery } from '../graphql/queries.generated'
 
-export default function useListFields() {
-  const { data, loading, refetch } = useGetFieldsQuery({
+export default function useListInventories() {
+  const { data, loading, refetch } = useGetInventoriesQuery({
     variables: {
       sorting: [
         {
-          field: FieldSortFields.CreatedAt,
+          field: InventorySortFields.CreatedAt,
           direction: SortDirection.Asc,
           nulls: SortNulls.NullsLast,
         },

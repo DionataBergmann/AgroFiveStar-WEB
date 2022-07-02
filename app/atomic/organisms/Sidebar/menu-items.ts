@@ -27,7 +27,7 @@ export const menuItems = [
   },
   {
     label: 'Estoque',
-    href: '/admin/stock',
+    href: '/admin/estoque',
     icon: FiBox,
   },
   {

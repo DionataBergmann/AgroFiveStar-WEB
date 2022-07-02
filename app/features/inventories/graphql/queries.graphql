@@ -1,0 +1,14 @@
+query getInventories($filter: InventoryFilter $sorting: [InventorySort!] $paging: OffsetPaging) {
+  inventories(filter: $filter sorting: $sorting paging: $paging) {
+    nodes {
+      id
+     	name
+			storage
+			provider
+			amount
+			value
+      createdAt
+      }
+  }
+}
+
