@@ -45,7 +45,7 @@ export const FieldForm = React.memo(
             label="Hectares"
             name="acre"
             placeholder="Fazenda..."
-            type="number"
+            type="string"
             labelProps={{ color: 'boulder' }}
             inputProps={{
               color: 'boulder',

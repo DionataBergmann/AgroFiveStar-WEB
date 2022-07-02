@@ -1,0 +1,8 @@
+mutation createOneField($field: CreateFieldInput!) {
+  createOneField(input: {field: $field}) {
+      id
+        name
+        acre
+        imageUrl
+  }
+}

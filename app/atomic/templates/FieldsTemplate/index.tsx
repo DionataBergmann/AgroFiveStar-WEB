@@ -4,9 +4,9 @@ import { FieldCard } from '@app/atomic/molecules/FieldCard'
 import { Modal } from '@app/atomic/molecules/Modal'
 import { FieldForm } from '@app/atomic/organisms/FieldForm'
 import FormProvider from '@app/atomic/organisms/FormProvider'
-import { InputFieldProps } from '@app/features/rooms/helper'
-import useCreateField from '@app/features/rooms/hooks/useCreateOneField'
-import useListFields from '@app/features/rooms/hooks/useListField'
+import { InputFieldProps } from '@app/features/fields/helper'
+import useCreateField from '@app/features/fields/hooks/useCreateOneField'
+import useListFields from '@app/features/fields/hooks/useListField'
 import { Grid } from '@chakra-ui/react'
 
 import { LayoutTemplate } from '../LayoutTemplate'
@@ -34,7 +34,7 @@ export const FieldsTemplate = () => {
     setModalIsOpen(false)
   }
 
-  function handleCreateRoom() {
+  function handleCreateField() {
     setInitialValues(defaultInitialValues)
     setIsEditForm(false)
     setModalIsOpen(true)
@@ -52,7 +52,7 @@ export const FieldsTemplate = () => {
     >
       <LayoutTemplate
         label="área"
-        onCreate={handleCreateRoom}
+        onCreate={handleCreateField}
         loading={loading}
       >
         <Grid
