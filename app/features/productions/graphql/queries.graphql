@@ -1,0 +1,11 @@
+query getProductions($filter: ProductionFilter $sorting: [ProductionSort!] $paging: OffsetPaging) {
+  productions(filter: $filter sorting: $sorting paging: $paging) {
+    nodes {
+      id
+      name
+			amount
+      createdAt
+      }
+  }
+}
+

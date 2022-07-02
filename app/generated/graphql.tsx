@@ -37,6 +37,11 @@ export type CreateManyInventoriesInput = {
   inventories: Array<CreateInventoryInput>;
 };
 
+export type CreateManyProductionsInput = {
+  /** Array of records to create */
+  productions: Array<CreateProductionInput>;
+};
+
 export type CreateOneFieldInput = {
   /** The record to create */
   field: CreateFieldInput;
@@ -45,6 +50,16 @@ export type CreateOneFieldInput = {
 export type CreateOneInventoryInput = {
   /** The record to create */
   inventory: CreateInventoryInput;
+};
+
+export type CreateOneProductionInput = {
+  /** The record to create */
+  production: CreateProductionInput;
+};
+
+export type CreateProductionInput = {
+  amount: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type DateFieldComparison = {
@@ -78,6 +93,11 @@ export type DeleteManyInventoriesInput = {
   filter: InventoryDeleteFilter;
 };
 
+export type DeleteManyProductionsInput = {
+  /** Filter to find records to delete */
+  filter: ProductionDeleteFilter;
+};
+
 export type DeleteManyResponse = {
   __typename?: 'DeleteManyResponse';
   /** The number of records deleted. */
@@ -90,6 +110,11 @@ export type DeleteOneFieldInput = {
 };
 
 export type DeleteOneInventoryInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
+export type DeleteOneProductionInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
 };
@@ -374,16 +399,22 @@ export type Mutation = {
   __typename?: 'Mutation';
   createManyFields: Array<Field>;
   createManyInventories: Array<Inventory>;
+  createManyProductions: Array<Production>;
   createOneField: Field;
   createOneInventory: Inventory;
+  createOneProduction: Production;
   deleteManyFields: DeleteManyResponse;
   deleteManyInventories: DeleteManyResponse;
+  deleteManyProductions: DeleteManyResponse;
   deleteOneField: FieldDeleteResponse;
   deleteOneInventory: InventoryDeleteResponse;
+  deleteOneProduction: ProductionDeleteResponse;
   updateManyFields: UpdateManyResponse;
   updateManyInventories: UpdateManyResponse;
+  updateManyProductions: UpdateManyResponse;
   updateOneField: Field;
   updateOneInventory: Inventory;
+  updateOneProduction: Production;
 };
 
 
@@ -397,6 +428,11 @@ export type MutationCreateManyInventoriesArgs = {
 };
 
 
+export type MutationCreateManyProductionsArgs = {
+  input: CreateManyProductionsInput;
+};
+
+
 export type MutationCreateOneFieldArgs = {
   input: CreateOneFieldInput;
 };
@@ -404,6 +440,11 @@ export type MutationCreateOneFieldArgs = {
 
 export type MutationCreateOneInventoryArgs = {
   input: CreateOneInventoryInput;
+};
+
+
+export type MutationCreateOneProductionArgs = {
+  input: CreateOneProductionInput;
 };
 
 
@@ -417,6 +458,11 @@ export type MutationDeleteManyInventoriesArgs = {
 };
 
 
+export type MutationDeleteManyProductionsArgs = {
+  input: DeleteManyProductionsInput;
+};
+
+
 export type MutationDeleteOneFieldArgs = {
   input: DeleteOneFieldInput;
 };
@@ -424,6 +470,11 @@ export type MutationDeleteOneFieldArgs = {
 
 export type MutationDeleteOneInventoryArgs = {
   input: DeleteOneInventoryInput;
+};
+
+
+export type MutationDeleteOneProductionArgs = {
+  input: DeleteOneProductionInput;
 };
 
 
@@ -437,6 +488,11 @@ export type MutationUpdateManyInventoriesArgs = {
 };
 
 
+export type MutationUpdateManyProductionsArgs = {
+  input: UpdateManyProductionsInput;
+};
+
+
 export type MutationUpdateOneFieldArgs = {
   input: UpdateOneFieldInput;
 };
@@ -444,6 +500,11 @@ export type MutationUpdateOneFieldArgs = {
 
 export type MutationUpdateOneInventoryArgs = {
   input: UpdateOneInventoryInput;
+};
+
+
+export type MutationUpdateOneProductionArgs = {
+  input: UpdateOneProductionInput;
 };
 
 export type OffsetPageInfo = {
@@ -461,12 +522,132 @@ export type OffsetPaging = {
   offset?: Maybe<Scalars['Int']>;
 };
 
+export type Production = {
+  __typename?: 'Production';
+  amount: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  deletedAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type ProductionAggregateGroupBy = {
+  __typename?: 'ProductionAggregateGroupBy';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProductionConnection = {
+  __typename?: 'ProductionConnection';
+  /** Array of nodes. */
+  nodes: Array<Production>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
+};
+
+export type ProductionCountAggregate = {
+  __typename?: 'ProductionCountAggregate';
+  amount?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+};
+
+export type ProductionDeleteFilter = {
+  amount?: Maybe<StringFieldComparison>;
+  and?: Maybe<Array<ProductionDeleteFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<ProductionDeleteFilter>>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
+export type ProductionDeleteResponse = {
+  __typename?: 'ProductionDeleteResponse';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProductionFilter = {
+  amount?: Maybe<StringFieldComparison>;
+  and?: Maybe<Array<ProductionFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<ProductionFilter>>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
+export type ProductionMaxAggregate = {
+  __typename?: 'ProductionMaxAggregate';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProductionMinAggregate = {
+  __typename?: 'ProductionMinAggregate';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProductionSort = {
+  direction: SortDirection;
+  field: ProductionSortFields;
+  nulls?: Maybe<SortNulls>;
+};
+
+export enum ProductionSortFields {
+  Amount = 'amount',
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Id = 'id',
+  Name = 'name',
+  UpdatedAt = 'updatedAt'
+}
+
+export type ProductionUpdateFilter = {
+  amount?: Maybe<StringFieldComparison>;
+  and?: Maybe<Array<ProductionUpdateFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<ProductionUpdateFilter>>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
 export type Query = {
   __typename?: 'Query';
   field?: Maybe<Field>;
   fields: FieldConnection;
   inventories: InventoryConnection;
   inventory?: Maybe<Inventory>;
+  production?: Maybe<Production>;
+  productions: ProductionConnection;
 };
 
 
@@ -491,6 +672,18 @@ export type QueryInventoriesArgs = {
 
 export type QueryInventoryArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryProductionArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryProductionsArgs = {
+  filter?: Maybe<ProductionFilter>;
+  paging?: Maybe<OffsetPaging>;
+  sorting?: Maybe<Array<ProductionSort>>;
 };
 
 /** Sort Directions */
@@ -552,6 +745,13 @@ export type UpdateManyInventoriesInput = {
   update: UpdateInventoryInput;
 };
 
+export type UpdateManyProductionsInput = {
+  /** Filter used to find fields to update */
+  filter: ProductionUpdateFilter;
+  /** The update to apply to all records found using the filter */
+  update: UpdateProductionInput;
+};
+
 export type UpdateManyResponse = {
   __typename?: 'UpdateManyResponse';
   /** The number of records updated. */
@@ -570,4 +770,17 @@ export type UpdateOneInventoryInput = {
   id: Scalars['ID'];
   /** The update to apply. */
   update: UpdateInventoryInput;
+};
+
+export type UpdateOneProductionInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdateProductionInput;
+};
+
+export type UpdateProductionInput = {
+  amount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 };
