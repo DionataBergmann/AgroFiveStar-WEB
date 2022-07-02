@@ -7,32 +7,32 @@ import { IoIosFlower } from 'react-icons/io'
 export const menuItems = [
   {
     label: 'Inicial',
-    href: '/admin/initial',
+    href: '/initial',
     icon: BsHouse,
   },
   {
     label: 'Áreas',
-    href: '/admin/areas',
+    href: '/areas',
     icon: BsBook,
   },
   {
     label: 'Máquinas',
-    href: '/admin/machines',
+    href: '/machines',
     icon: FaTractor,
   },
   {
     label: 'Financeiro',
-    href: '/admin/financial',
+    href: '/financial',
     icon: BsCurrencyDollar,
   },
   {
     label: 'Estoque',
-    href: '/admin/estoque',
+    href: '/estoque',
     icon: FiBox,
   },
   {
     label: 'Produção',
-    href: '/admin/production',
+    href: '/producao',
     icon: IoIosFlower,
   },
 ]
