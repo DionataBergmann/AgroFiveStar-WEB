@@ -3,10 +3,10 @@ import React from 'react'
 import { AdminTemplate } from '@app/atomic/templates/AdminTemplate'
 import { InventoriesTemplate } from '@app/atomic/templates/InventoriesTemplate'
 
-const AreasScreen = () => {
+const InventoryScreen = () => {
   return <InventoriesTemplate />
 }
 
-AreasScreen.template = AdminTemplate
+InventoryScreen.template = AdminTemplate
 
-export default AreasScreen
+export default InventoryScreen
