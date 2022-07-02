@@ -14,9 +14,17 @@ export type Scalars = {
 };
 
 export type CreateFieldInput = {
-  acre: Scalars['Float'];
+  acre: Scalars['String'];
   imageUrl: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type CreateInventoryInput = {
+  amount: Scalars['String'];
+  name: Scalars['String'];
+  provider: Scalars['String'];
+  storage: Scalars['String'];
+  value?: Maybe<Scalars['String']>;
 };
 
 export type CreateManyFieldsInput = {
@@ -24,9 +32,19 @@ export type CreateManyFieldsInput = {
   fields: Array<CreateFieldInput>;
 };
 
+export type CreateManyInventoriesInput = {
+  /** Array of records to create */
+  inventories: Array<CreateInventoryInput>;
+};
+
 export type CreateOneFieldInput = {
   /** The record to create */
   field: CreateFieldInput;
+};
+
+export type CreateOneInventoryInput = {
+  /** The record to create */
+  inventory: CreateInventoryInput;
 };
 
 export type DateFieldComparison = {
@@ -55,6 +73,11 @@ export type DeleteManyFieldsInput = {
   filter: FieldDeleteFilter;
 };
 
+export type DeleteManyInventoriesInput = {
+  /** Filter to find records to delete */
+  filter: InventoryDeleteFilter;
+};
+
 export type DeleteManyResponse = {
   __typename?: 'DeleteManyResponse';
   /** The number of records deleted. */
@@ -66,9 +89,14 @@ export type DeleteOneFieldInput = {
   id: Scalars['ID'];
 };
 
+export type DeleteOneInventoryInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
 export type Field = {
   __typename?: 'Field';
-  acre: Scalars['Float'];
+  acre: Scalars['String'];
   createdAt: Scalars['DateTime'];
   deletedAt: Scalars['DateTime'];
   id: Scalars['String'];
@@ -79,18 +107,13 @@ export type Field = {
 
 export type FieldAggregateGroupBy = {
   __typename?: 'FieldAggregateGroupBy';
-  acre?: Maybe<Scalars['Float']>;
+  acre?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type FieldAvgAggregate = {
-  __typename?: 'FieldAvgAggregate';
-  acre?: Maybe<Scalars['Float']>;
 };
 
 export type FieldConnection = {
@@ -115,7 +138,7 @@ export type FieldCountAggregate = {
 };
 
 export type FieldDeleteFilter = {
-  acre?: Maybe<NumberFieldComparison>;
+  acre?: Maybe<StringFieldComparison>;
   and?: Maybe<Array<FieldDeleteFilter>>;
   createdAt?: Maybe<DateFieldComparison>;
   deletedAt?: Maybe<DateFieldComparison>;
@@ -128,7 +151,7 @@ export type FieldDeleteFilter = {
 
 export type FieldDeleteResponse = {
   __typename?: 'FieldDeleteResponse';
-  acre?: Maybe<Scalars['Float']>;
+  acre?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
@@ -138,7 +161,7 @@ export type FieldDeleteResponse = {
 };
 
 export type FieldFilter = {
-  acre?: Maybe<NumberFieldComparison>;
+  acre?: Maybe<StringFieldComparison>;
   and?: Maybe<Array<FieldFilter>>;
   createdAt?: Maybe<DateFieldComparison>;
   deletedAt?: Maybe<DateFieldComparison>;
@@ -151,7 +174,7 @@ export type FieldFilter = {
 
 export type FieldMaxAggregate = {
   __typename?: 'FieldMaxAggregate';
-  acre?: Maybe<Scalars['Float']>;
+  acre?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
@@ -162,7 +185,7 @@ export type FieldMaxAggregate = {
 
 export type FieldMinAggregate = {
   __typename?: 'FieldMinAggregate';
-  acre?: Maybe<Scalars['Float']>;
+  acre?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
@@ -187,13 +210,8 @@ export enum FieldSortFields {
   UpdatedAt = 'updatedAt'
 }
 
-export type FieldSumAggregate = {
-  __typename?: 'FieldSumAggregate';
-  acre?: Maybe<Scalars['Float']>;
-};
-
 export type FieldUpdateFilter = {
-  acre?: Maybe<NumberFieldComparison>;
+  acre?: Maybe<StringFieldComparison>;
   and?: Maybe<Array<FieldUpdateFilter>>;
   createdAt?: Maybe<DateFieldComparison>;
   deletedAt?: Maybe<DateFieldComparison>;
@@ -204,14 +222,168 @@ export type FieldUpdateFilter = {
   updatedAt?: Maybe<DateFieldComparison>;
 };
 
+export type Inventory = {
+  __typename?: 'Inventory';
+  amount: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  deletedAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  provider: Scalars['String'];
+  storage: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  value?: Maybe<Scalars['String']>;
+};
+
+export type InventoryAggregateGroupBy = {
+  __typename?: 'InventoryAggregateGroupBy';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  provider?: Maybe<Scalars['String']>;
+  storage?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type InventoryConnection = {
+  __typename?: 'InventoryConnection';
+  /** Array of nodes. */
+  nodes: Array<Inventory>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
+};
+
+export type InventoryCountAggregate = {
+  __typename?: 'InventoryCountAggregate';
+  amount?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  provider?: Maybe<Scalars['Int']>;
+  storage?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type InventoryDeleteFilter = {
+  amount?: Maybe<StringFieldComparison>;
+  and?: Maybe<Array<InventoryDeleteFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<InventoryDeleteFilter>>;
+  provider?: Maybe<StringFieldComparison>;
+  storage?: Maybe<StringFieldComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
+  value?: Maybe<StringFieldComparison>;
+};
+
+export type InventoryDeleteResponse = {
+  __typename?: 'InventoryDeleteResponse';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  provider?: Maybe<Scalars['String']>;
+  storage?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type InventoryFilter = {
+  amount?: Maybe<StringFieldComparison>;
+  and?: Maybe<Array<InventoryFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<InventoryFilter>>;
+  provider?: Maybe<StringFieldComparison>;
+  storage?: Maybe<StringFieldComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
+  value?: Maybe<StringFieldComparison>;
+};
+
+export type InventoryMaxAggregate = {
+  __typename?: 'InventoryMaxAggregate';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  provider?: Maybe<Scalars['String']>;
+  storage?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type InventoryMinAggregate = {
+  __typename?: 'InventoryMinAggregate';
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  provider?: Maybe<Scalars['String']>;
+  storage?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type InventorySort = {
+  direction: SortDirection;
+  field: InventorySortFields;
+  nulls?: Maybe<SortNulls>;
+};
+
+export enum InventorySortFields {
+  Amount = 'amount',
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Id = 'id',
+  Name = 'name',
+  Provider = 'provider',
+  Storage = 'storage',
+  UpdatedAt = 'updatedAt',
+  Value = 'value'
+}
+
+export type InventoryUpdateFilter = {
+  amount?: Maybe<StringFieldComparison>;
+  and?: Maybe<Array<InventoryUpdateFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<InventoryUpdateFilter>>;
+  provider?: Maybe<StringFieldComparison>;
+  storage?: Maybe<StringFieldComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
+  value?: Maybe<StringFieldComparison>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createManyFields: Array<Field>;
+  createManyInventories: Array<Inventory>;
   createOneField: Field;
+  createOneInventory: Inventory;
   deleteManyFields: DeleteManyResponse;
+  deleteManyInventories: DeleteManyResponse;
   deleteOneField: FieldDeleteResponse;
+  deleteOneInventory: InventoryDeleteResponse;
   updateManyFields: UpdateManyResponse;
+  updateManyInventories: UpdateManyResponse;
   updateOneField: Field;
+  updateOneInventory: Inventory;
 };
 
 
@@ -220,8 +392,18 @@ export type MutationCreateManyFieldsArgs = {
 };
 
 
+export type MutationCreateManyInventoriesArgs = {
+  input: CreateManyInventoriesInput;
+};
+
+
 export type MutationCreateOneFieldArgs = {
   input: CreateOneFieldInput;
+};
+
+
+export type MutationCreateOneInventoryArgs = {
+  input: CreateOneInventoryInput;
 };
 
 
@@ -230,8 +412,18 @@ export type MutationDeleteManyFieldsArgs = {
 };
 
 
+export type MutationDeleteManyInventoriesArgs = {
+  input: DeleteManyInventoriesInput;
+};
+
+
 export type MutationDeleteOneFieldArgs = {
   input: DeleteOneFieldInput;
+};
+
+
+export type MutationDeleteOneInventoryArgs = {
+  input: DeleteOneInventoryInput;
 };
 
 
@@ -240,28 +432,18 @@ export type MutationUpdateManyFieldsArgs = {
 };
 
 
+export type MutationUpdateManyInventoriesArgs = {
+  input: UpdateManyInventoriesInput;
+};
+
+
 export type MutationUpdateOneFieldArgs = {
   input: UpdateOneFieldInput;
 };
 
-export type NumberFieldComparison = {
-  between?: Maybe<NumberFieldComparisonBetween>;
-  eq?: Maybe<Scalars['Float']>;
-  gt?: Maybe<Scalars['Float']>;
-  gte?: Maybe<Scalars['Float']>;
-  in?: Maybe<Array<Scalars['Float']>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  lt?: Maybe<Scalars['Float']>;
-  lte?: Maybe<Scalars['Float']>;
-  neq?: Maybe<Scalars['Float']>;
-  notBetween?: Maybe<NumberFieldComparisonBetween>;
-  notIn?: Maybe<Array<Scalars['Float']>>;
-};
 
-export type NumberFieldComparisonBetween = {
-  lower: Scalars['Float'];
-  upper: Scalars['Float'];
+export type MutationUpdateOneInventoryArgs = {
+  input: UpdateOneInventoryInput;
 };
 
 export type OffsetPageInfo = {
@@ -283,6 +465,8 @@ export type Query = {
   __typename?: 'Query';
   field?: Maybe<Field>;
   fields: FieldConnection;
+  inventories: InventoryConnection;
+  inventory?: Maybe<Inventory>;
 };
 
 
@@ -295,6 +479,18 @@ export type QueryFieldsArgs = {
   filter?: Maybe<FieldFilter>;
   paging?: Maybe<OffsetPaging>;
   sorting?: Maybe<Array<FieldSort>>;
+};
+
+
+export type QueryInventoriesArgs = {
+  filter?: Maybe<InventoryFilter>;
+  paging?: Maybe<OffsetPaging>;
+  sorting?: Maybe<Array<InventorySort>>;
+};
+
+
+export type QueryInventoryArgs = {
+  id: Scalars['ID'];
 };
 
 /** Sort Directions */
@@ -327,10 +523,19 @@ export type StringFieldComparison = {
 };
 
 export type UpdateFieldInput = {
-  acre?: Maybe<Scalars['Float']>;
+  acre?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   imageUrl?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+};
+
+export type UpdateInventoryInput = {
+  amount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  provider?: Maybe<Scalars['String']>;
+  storage?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type UpdateManyFieldsInput = {
@@ -338,6 +543,13 @@ export type UpdateManyFieldsInput = {
   filter: FieldUpdateFilter;
   /** The update to apply to all records found using the filter */
   update: UpdateFieldInput;
+};
+
+export type UpdateManyInventoriesInput = {
+  /** Filter used to find fields to update */
+  filter: InventoryUpdateFilter;
+  /** The update to apply to all records found using the filter */
+  update: UpdateInventoryInput;
 };
 
 export type UpdateManyResponse = {
@@ -351,4 +563,11 @@ export type UpdateOneFieldInput = {
   id: Scalars['ID'];
   /** The update to apply. */
   update: UpdateFieldInput;
+};
+
+export type UpdateOneInventoryInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdateInventoryInput;
 };
