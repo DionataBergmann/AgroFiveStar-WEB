@@ -1,78 +1,68 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
-import { BoxProps, Flex, FormControl, Text } from '@chakra-ui/react'
-import { DropzoneOptions, useDropzone } from 'react-dropzone'
-import { Field, useField } from 'react-final-form'
+import { InputGroup } from '@chakra-ui/react'
+import { useForm } from 'react-final-form'
 
-export type UploadFieldProps = {
+type UploadFieldProps = {
   name: string
-  label?: string
-  errorFieldName?: string
-  boxProps?: BoxProps
-} & Pick<
-  DropzoneOptions,
-  | 'maxFiles'
-  | 'minSize'
-  | 'accept'
-  | 'disabled'
-  | 'maxSize'
-  | 'multiple'
->
+  accept?: string
+  multiple?: boolean
+  children?:
+  | ((props: {
+    onClick?: () => void
+    fileList: File[]
+  }) => React.ReactNode)
+  | JSX.Element
+}
 
-export default function UploadField({
+export const UploadField: React.FC<UploadFieldProps> = ({
   name,
-  label,
-  boxProps,
-  ...dropzoneOptions
-}: UploadFieldProps) {
-  const { input } = useField(name, {})
+  accept,
+  multiple,
+  children,
+}) => {
+  const form = useForm()
+  const [fileList, setFileList] = useState<File[]>([])
+  const inputRef = React.createRef<HTMLInputElement>()
 
-  const [files, setFiles] = useState([...input?.value])
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (
+    value,
+  ) => {
+    if (value.target.files) {
+      if (multiple) {
+        const files: File[] = []
 
-  const { getRootProps, getInputProps } = useDropzone({
-    multiple: false,
-    onDrop: (acceptedFiles) => {
-      const newFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-          id: Math.floor(Math.random() * 5000) + file.name,
-        }),
-      )
-      setFiles(newFiles)
-    },
-    ...dropzoneOptions,
-  })
+        for (let i = 0; i < value.target.files.length; i++) {
+          const file = value.target.files.item(i)
+          if (file) files.push(file)
+        }
 
-  useEffect(() => {
-    input?.onChange?.(files)
+        form.change(name, value.target.files)
+        setFileList(files)
+      } else {
+        const file = value.target.files.item(0)
 
-    return () => {
-      files?.forEach((file) => URL.revokeObjectURL(file.preview))
+        form.change(name, file)
+        setFileList(file ? [file] : [])
+      }
     }
-  }, [files, input])
+  }
+
+  const onClick = () => inputRef?.current?.click()
 
   return (
-    <FormControl id={input.name} {...boxProps}>
-      <Field name={name}>
-        {() => (
-          <Flex
-            flexDir="row"
-            transition="300ms"
-            {...getRootProps({ className: 'dropzone' })}
-            cursor="pointer"
-            align="center"
-          >
-            <input {...getInputProps()} />
-            <Text
-              color="primary.500"
-              fontWeight="bold"
-              textDecoration="underline"
-            >
-              {label}
-            </Text>
-          </Flex>
-        )}
-      </Field>
-    </FormControl>
+    <InputGroup>
+      <input
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        multiple={multiple}
+        hidden
+        onChange={onChange}
+      />
+      {typeof children !== 'function'
+        ? children
+        : children({ onClick, fileList })}
+    </InputGroup>
   )
 }

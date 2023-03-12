@@ -54,7 +54,7 @@ export const TextField = memo(
         <Input
           color="boulder"
           size="md"
-          borderRadius="5px"
+          borderRadius="10px"
           border="2px solid"
           maxLength={maximumOfletters}
           borderColor="rgba(0,0,0,0.05)"
