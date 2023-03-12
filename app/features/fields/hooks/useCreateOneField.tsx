@@ -4,7 +4,7 @@ import { useToast } from '@chakra-ui/react'
 import { useCreateOneFieldMutation } from '../graphql/mutations.generated'
 import { InputFieldProps } from '../helper'
 
-export default function useCreateField({ refetch }) {
+export default function useCreateField(file) {
   const toast = useToast()
 
   const [createOneFieldMutation, { data: createdField }] =
@@ -12,17 +12,19 @@ export default function useCreateField({ refetch }) {
       refetchQueries: ['getFields'],
     })
 
-  async function createOneField(values: InputFieldProps) {
+  async function createField(values: InputFieldProps) {
     try {
-      const { name, acre, imageUrl } = values
+      const { name, acre } = values
 
       const { data: createdField } = await createOneFieldMutation({
         variables: {
-          field: {
+          data: {
             name,
             acre,
-            imageUrl,
+            imagePath: file?.source,
           },
+
+          fieldImage: file?.file,
         },
       })
 
@@ -34,12 +36,12 @@ export default function useCreateField({ refetch }) {
         variant: 'left-accent',
         isClosable: true,
       })
-      refetch()
+
       return createdField
     } catch (error) {
       catchError(error)
     }
   }
 
-  return { createOneField, createdField }
+  return { createField, createdField }
 }

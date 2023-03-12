@@ -1,8 +1,19 @@
-mutation createOneField($field: CreateFieldInput!) {
-  createOneField(input: {field: $field}) {
-      id
-        name
-        acre
-        imageUrl
+mutation createOneField($data:CreateFieldInput! $fieldImage: Upload){
+  createOneField(data:$data, fieldImage:$fieldImage){
+    id
+  }
+}
+
+
+mutation updateOneField($id:String! $data: UpdateFieldInput! $fieldImage: Upload){
+  updateOneField(id: $id, data: $data, fieldImage:$fieldImage) {
+	  id
+  }
+}
+
+mutation deleteOneField($id:String!) {
+   deleteOneFieldAndForget(id: $id) {
+    id
+    name
   }
 }

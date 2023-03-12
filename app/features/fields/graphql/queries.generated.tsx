@@ -16,7 +16,11 @@ export type GetFieldsQuery = (
     { __typename?: 'FieldConnection' }
     & { nodes: Array<(
       { __typename?: 'Field' }
-      & Pick<Types.Field, 'id' | 'name' | 'acre' | 'imageUrl'>
+      & Pick<Types.Field, 'id' | 'name' | 'acre' | 'imagePath'>
+      & { fieldImage?: Types.Maybe<(
+        { __typename?: 'File' }
+        & Pick<Types.File, 'id' | 'fileName' | 'filePath'>
+      )> }
     )> }
   ) }
 );
@@ -29,7 +33,12 @@ export const GetFieldsDocument = gql`
       id
       name
       acre
-      imageUrl
+      imagePath
+      fieldImage {
+        id
+        fileName
+        filePath
+      }
     }
   }
 }

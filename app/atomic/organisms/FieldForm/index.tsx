@@ -1,22 +1,34 @@
 import React from 'react'
 
-import { UploadOutlined } from '@ant-design/icons'
+import { NumberField } from '@app/atomic/molecules/numberField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
 import { pxToRem } from '@app/common/theme/utils'
-import { Button, Flex, Grid } from '@chakra-ui/react'
-import { Upload } from 'antd'
+import { Button, Flex, Grid, Image } from '@chakra-ui/react'
+import { useFileUpload } from 'use-file-upload'
 
 interface FieldFormProps {
   handleOnClose?: () => void
   isEditForm?: boolean
+  setFile?: any
+  initialValues?: any
 }
 
 export const FieldForm = React.memo(
-  ({ handleOnClose, isEditForm }: FieldFormProps) => {
+  ({
+    handleOnClose,
+    isEditForm,
+    setFile,
+    initialValues,
+  }: FieldFormProps) => {
     const handleSubmit: () => void = useFormContextSelector(
       (s) => s.handleSubmit,
     )
+    const [files, selectFiles] = useFileUpload()
+    setFile(files)
+
+    const defaultSrc =
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQT40BuNQFOItdDuxw2UHq2Kdz5-OsTWIkQFlPRts&s'
 
     return (
       <Flex flexDir="column" width="100%">
@@ -40,32 +52,32 @@ export const FieldForm = React.memo(
               borderColor: 'rgba(0,0,0,0.05)',
             }}
           />
-          <TextField
-            w="100%"
-            label="Hectares"
-            name="acre"
-            placeholder="Fazenda..."
-            type="string"
-            labelProps={{ color: 'boulder' }}
-            inputProps={{
-              color: 'boulder',
-              size: 'md',
-              shadow: 'md',
-              borderRadius: '10px',
-              border: '1px solid',
-              borderColor: 'rgba(0,0,0,0.05)',
-            }}
-          />
+          <NumberField name="acre" type="number" label="Hectares" />
         </Grid>
-        <Upload>
-          <Button color="primary" name="imageUrl">
-            <UploadOutlined />
-            <span style={{ marginLeft: '10px' }}>
-              Adicionar foto de capa
-            </span>
+
+        <Flex flexDir="column" alignItems="center">
+          <Image
+            src={
+              files?.source || initialValues?.imagePath || defaultSrc
+            }
+            alt="image"
+            h={150}
+            w={300}
+            mb={5}
+          />
+          <Button
+            onClick={() =>
+              selectFiles(
+                { accept: 'image/*' },
+                ({ source, file }) => { },
+              )
+            }
+          >
+            Escolher arquivo
           </Button>
-        </Upload>
-        <Flex>
+        </Flex>
+
+        <Flex mt="50px">
           <Button
             onClick={handleOnClose}
             size="md"
@@ -74,7 +86,7 @@ export const FieldForm = React.memo(
             color="primary"
             borderRadius={pxToRem(5)}
             mb={pxToRem(30)}
-            ml="415px"
+            ml={isEditForm ? '430px' : '400px'}
           >
             Cancelar
           </Button>
@@ -88,6 +100,7 @@ export const FieldForm = React.memo(
             w="auto"
             mb={pxToRem(30)}
             ml="auto"
+            _hover={{ bg: '#53754a' }}
           >
             {isEditForm ? 'Salvar' : 'Cadastrar'}
           </Button>
