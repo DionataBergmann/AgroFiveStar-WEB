@@ -1,15 +1,19 @@
-query getFields($filter: FieldFilter $sorting: [FieldSort!] $paging: OffsetPaging) {
-  fields(filter: $filter sorting: $sorting paging: $paging) {
-
+query getFields(
+  $filter: FieldFilter
+  $sorting: [FieldSort!]
+  $paging: OffsetPaging
+) {
+  fields(filter: $filter, sorting: $sorting, paging: $paging) {
     nodes {
       id
       name
       acre
-      imageUrl
+      imagePath
+      fieldImage {
+        id
+        fileName
+        filePath
       }
- 
-    
- 
+    }
+  }
 }
-}
-

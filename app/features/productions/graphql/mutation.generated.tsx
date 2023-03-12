@@ -13,6 +13,10 @@ export type CreateOneProductionMutation = (
   & { createOneProduction: (
     { __typename?: 'Production' }
     & Pick<Types.Production, 'id' | 'name' | 'amount'>
+    & { fields?: Types.Maybe<(
+      { __typename?: 'Field' }
+      & Pick<Types.Field, 'id' | 'name'>
+    )> }
   ) }
 );
 
@@ -50,6 +54,10 @@ export const CreateOneProductionDocument = gql`
     id
     name
     amount
+    fields {
+      id
+      name
+    }
   }
 }
     `;

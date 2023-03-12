@@ -6,10 +6,11 @@ import { Box, Flex } from '@chakra-ui/react'
 interface FieldCardTextProps {
   title?: string
   acre?: number
-  imageUrl: string
+  fieldImage: any
+  imagePath: string
 }
 export const FieldCardText = React.memo(
-  ({ title, acre, imageUrl }: FieldCardTextProps) => {
+  ({ title, acre, fieldImage, imagePath }: FieldCardTextProps) => {
     return (
       <Flex
         flexDirection="column"
@@ -18,7 +19,7 @@ export const FieldCardText = React.memo(
         justifyContent="space-evenly"
         alignItems="center"
       >
-        <Img w="100%" src={imageUrl} />
+        <Img mt="10px" w="100%" h="300px" src={imagePath} />
         <Box w="100%" marginTop="10px">
           <Text fontSize="md" align="center" color="white">
             <b>Nome:</b> {title}

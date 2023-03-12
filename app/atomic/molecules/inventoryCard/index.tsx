@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { InputInventoryProps } from '@app/features/inventories/helper'
 import { Inventory } from '@app/generated/graphql'
 import { Flex, Grid, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
@@ -12,18 +13,46 @@ type Props = {
   data: Inventory
   id?: string
   onEdit?: any
+  name?: string
+  provider?: string
+  amount?: number
+  storage?: string
+  value?: number
+  field?: any
   onDelete?: (id: string) => Promise<void>
+  setInitialValues?: (value: InputInventoryProps) => void
 }
 
 export const InventoryCard: React.FC<Props> = ({
   data,
+  id,
+  name,
+  provider,
+  amount,
+  storage,
+  value,
+  field,
   onEdit,
   onDelete,
+  setInitialValues,
 }) => {
-  const FormatValue = ({ value }: any) => {
+  function handleOnEdit() {
+    setInitialValues({
+      id: id,
+      name: name,
+      amount: amount,
+      provider: provider,
+      storage: storage,
+      field: field,
+      value: value,
+    })
+
+    onEdit()
+  }
+  const FormatValue = ({ value }) => {
     return (
       <Text fontSize="sm">
-        {value?.toLocaleString('pt-br', {
+        {value.toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL',
         })}
@@ -48,7 +77,7 @@ export const InventoryCard: React.FC<Props> = ({
             '1fr',
             '1fr',
             '1fr',
-            '35px 1fr 1fr 1fr 1fr 1fr 1fr ',
+            '35px 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
           ]}
           w="100%"
           gridGap="5px"
@@ -59,10 +88,13 @@ export const InventoryCard: React.FC<Props> = ({
             fontSize="sm"
           ></Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
-            {data?.name}
+            {format(new Date(data?.createdAt), 'dd/MM/yyyy')}
           </Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
-            {format(new Date(data?.createdAt), 'dd/MM/yyyy')}
+            {data?.fields?.name}
+          </Text>
+          <Text color="gray.700" fontWeight="normal" fontSize="sm">
+            {data?.name}
           </Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
             {data?.storage}
@@ -82,7 +114,7 @@ export const InventoryCard: React.FC<Props> = ({
             {
               title: 'Editar informações',
               icon: FiEdit2,
-              onClick: () => onEdit(data),
+              onClick: () => handleOnEdit(),
             },
             {
               title: 'Deletar Item',

@@ -17,6 +17,10 @@ export type GetProductionsQuery = (
     & { nodes: Array<(
       { __typename?: 'Production' }
       & Pick<Types.Production, 'id' | 'name' | 'amount' | 'createdAt'>
+      & { fields?: Types.Maybe<(
+        { __typename?: 'Field' }
+        & Pick<Types.Field, 'id' | 'name'>
+      )> }
     )> }
   ) }
 );
@@ -30,6 +34,10 @@ export const GetProductionsDocument = gql`
       name
       amount
       createdAt
+      fields {
+        id
+        name
+      }
     }
   }
 }

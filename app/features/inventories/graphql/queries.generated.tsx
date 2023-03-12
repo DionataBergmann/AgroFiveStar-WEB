@@ -17,6 +17,10 @@ export type GetInventoriesQuery = (
     & { nodes: Array<(
       { __typename?: 'Inventory' }
       & Pick<Types.Inventory, 'id' | 'name' | 'storage' | 'provider' | 'amount' | 'value' | 'createdAt'>
+      & { fields?: Types.Maybe<(
+        { __typename?: 'Field' }
+        & Pick<Types.Field, 'id' | 'name'>
+      )> }
     )> }
   ) }
 );
@@ -33,6 +37,10 @@ export const GetInventoriesDocument = gql`
       amount
       value
       createdAt
+      fields {
+        id
+        name
+      }
     }
   }
 }

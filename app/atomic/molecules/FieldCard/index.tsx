@@ -2,19 +2,47 @@ import React from 'react'
 
 import { Card } from '@app/atomic/atoms/Card'
 import { FieldCardText } from '@app/atomic/molecules/FieldCardText'
+import { InputFieldProps } from '@app/features/fields/helper'
+import { FaRegTrashAlt } from 'react-icons/fa'
+import { FiEdit2 } from 'react-icons/fi'
+
+import { MoreOptionsMenuButton } from '../MoreOptionsButtons'
 
 export type FieldCardProps = {
-  title: string
+  data: News
   id?: string
+  name: string
   acre: number
-  imageUrl: string
+  fieldImage: any
+  imagePath: string
+  onEdit?: any
+  onDelete?: (id: string) => Promise<void>
+  setInitialValues?: (value: InputFieldProps) => void
 }
 
 export const FieldCard: React.FC<FieldCardProps> = ({
-  title,
+  id,
+  data,
+  name,
   acre,
-  imageUrl,
+  fieldImage,
+  imagePath,
+  onEdit,
+  onDelete,
+  setInitialValues,
 }) => {
+  function handleOnEdit() {
+    setInitialValues({
+      id: id,
+      name: name,
+      acre: acre,
+      fieldImage: fieldImage?.filePath,
+      imagePath: imagePath,
+    })
+
+    onEdit()
+  }
+
   return (
     <Card
       justifyContent="flex-start"
@@ -24,7 +52,28 @@ export const FieldCard: React.FC<FieldCardProps> = ({
       w="100%"
       bgColor="primary"
     >
-      <FieldCardText title={title} acre={acre} imageUrl={imageUrl} />
+      <FieldCardText
+        title={name}
+        acre={acre}
+        fieldImage={fieldImage}
+        imagePath={imagePath}
+      />
+      <MoreOptionsMenuButton
+        options={[
+          {
+            title: 'Editar informações',
+            icon: FiEdit2,
+            onClick: () => handleOnEdit(),
+          },
+          {
+            title: 'Deletar Item',
+            icon: FaRegTrashAlt,
+            onClick: async () => await onDelete(data.id),
+            showDeleteWarning: true,
+          },
+        ]}
+        positionConfig={{ top: '0px', right: '0px' }}
+      />
     </Card>
   )
 }

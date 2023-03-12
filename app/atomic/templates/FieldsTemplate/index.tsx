@@ -6,7 +6,9 @@ import { FieldForm } from '@app/atomic/organisms/FieldForm'
 import FormProvider from '@app/atomic/organisms/FormProvider'
 import { InputFieldProps } from '@app/features/fields/helper'
 import useCreateField from '@app/features/fields/hooks/useCreateOneField'
+import useDeleteOneField from '@app/features/fields/hooks/useDeleteOneField'
 import useListFields from '@app/features/fields/hooks/useListField'
+import useUpdateOneField from '@app/features/fields/hooks/useUpdateOneField'
 import { Grid } from '@chakra-ui/react'
 
 import { LayoutTemplate } from '../LayoutTemplate'
@@ -16,7 +18,8 @@ export const FieldsTemplate = () => {
     id: null,
     name: '',
     acre: 0,
-    imageUrl: '',
+    fieldImage: '',
+    imagePath: '',
   }
 
   const [initialValues, setInitialValues] = useState<InputFieldProps>(
@@ -28,7 +31,10 @@ export const FieldsTemplate = () => {
 
   const { data, loading, refetch } = useListFields()
 
-  const { createOneField } = useCreateField({ refetch })
+  const [file, setFile] = useState<File>()
+  const { createField } = useCreateField(file)
+  const { updateOneField } = useUpdateOneField({ refetch }, file)
+  const { removeField } = useDeleteOneField()
 
   function handleCloseFieldModal() {
     setModalIsOpen(false)
@@ -39,12 +45,19 @@ export const FieldsTemplate = () => {
     setIsEditForm(false)
     setModalIsOpen(true)
   }
+  function handleEditField() {
+    setIsEditForm(true)
+    setModalIsOpen(true)
+  }
+
   return (
     <FormProvider
       initialValues={initialValues}
       onSubmit={async (values, form) => {
-        if (!isEditForm) {
-          await createOneField(values as any)
+        if (isEditForm) {
+          await updateOneField(values as any)
+        } else {
+          await createField(values as any)
         }
         handleCloseFieldModal()
         form.reset()
@@ -69,10 +82,15 @@ export const FieldsTemplate = () => {
           {data?.fields?.nodes?.map((value) => (
             <FieldCard
               key={value.id}
+              data={value}
               id={value.id}
-              title={value.name}
+              name={value.name}
               acre={value.acre}
-              imageUrl={value.imageUrl}
+              imagePath={value?.imagePath}
+              onEdit={handleEditField}
+              onDelete={removeField}
+              setInitialValues={setInitialValues}
+              fieldImage={value.fieldImage}
             />
           ))}
         </Grid>
@@ -88,6 +106,8 @@ export const FieldsTemplate = () => {
           <FieldForm
             handleOnClose={handleCloseFieldModal}
             isEditForm={isEditForm}
+            setFile={setFile}
+            initialValues={initialValues}
           />
         </Modal>
       </LayoutTemplate>

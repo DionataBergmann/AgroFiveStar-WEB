@@ -13,6 +13,7 @@ type Props = {
   data: Production
   id?: string
   name: string
+  field: any
   amount: number
   onEdit?: any
   onDelete?: (id: string) => Promise<void>
@@ -23,6 +24,7 @@ export const ProductionCard: React.FC<Props> = ({
   data,
   id,
   name,
+  field,
   amount,
   onEdit,
   onDelete,
@@ -33,6 +35,7 @@ export const ProductionCard: React.FC<Props> = ({
       id: id,
       name: name,
       amount: amount,
+      field: field,
     })
 
     onEdit()
@@ -66,10 +69,13 @@ export const ProductionCard: React.FC<Props> = ({
             fontSize="sm"
           ></Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
-            {data?.name}
+            {format(new Date(data?.createdAt), 'dd/MM/yyyy')}
           </Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
-            {format(new Date(data?.createdAt), 'dd/MM/yyyy')}
+            {data?.fields?.name}
+          </Text>
+          <Text color="gray.700" fontWeight="normal" fontSize="sm">
+            {data?.name}
           </Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
             {data?.amount}

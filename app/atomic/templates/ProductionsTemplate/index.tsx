@@ -18,6 +18,7 @@ export const ProductionsTemplate = () => {
     id: null,
     name: '',
     amount: 0,
+    fields: '',
   }
 
   const [initialValues, setInitialValues] =
@@ -73,10 +74,13 @@ export const ProductionsTemplate = () => {
           >
             <Flex />
             <Text fontWeight="bold" fontSize="sm">
-              Nome do item
+              Data
             </Text>
             <Text fontWeight="bold" fontSize="sm">
-              Data
+              Campo
+            </Text>
+            <Text fontWeight="bold" fontSize="sm">
+              Nome do item
             </Text>
             <Text fontWeight="bold" fontSize="sm">
               Quantidade
@@ -89,6 +93,7 @@ export const ProductionsTemplate = () => {
               id={item.id}
               name={item.name}
               amount={item.amount}
+              field={item.fields}
               onEdit={handleEditProduction}
               onDelete={removeProduction}
               setInitialValues={setInitialValues}
@@ -109,6 +114,7 @@ export const ProductionsTemplate = () => {
           <ProductionForm
             handleOnClose={handleCloseProductionModal}
             isEditForm={isEditForm}
+            initialValues={initialValues}
           />
         </Modal>
       </LayoutTemplate>

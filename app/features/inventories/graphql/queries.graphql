@@ -1,14 +1,21 @@
-query getInventories($filter: InventoryFilter $sorting: [InventorySort!] $paging: OffsetPaging) {
-  inventories(filter: $filter sorting: $sorting paging: $paging) {
+query getInventories(
+  $filter: InventoryFilter
+  $sorting: [InventorySort!]
+  $paging: OffsetPaging
+) {
+  inventories(filter: $filter, sorting: $sorting, paging: $paging) {
     nodes {
       id
-     	name
-			storage
-			provider
-			amount
-			value
+      name
+      storage
+      provider
+      amount
+      value
       createdAt
+      fields {
+        id
+        name
       }
+    }
   }
 }
-

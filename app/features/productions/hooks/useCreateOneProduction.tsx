@@ -14,7 +14,7 @@ export default function useCreateProduction({ refetch }) {
 
   async function createOneProduction(values: InputProductionProps) {
     try {
-      const { name, amount } = values
+      const { name, amount, fields } = values
 
       const { data: createdProduction } =
         await createOneProductionMutation({
@@ -22,6 +22,9 @@ export default function useCreateProduction({ refetch }) {
             production: {
               name,
               amount,
+              fields: {
+                id: values?.fields,
+              },
             },
           },
         })

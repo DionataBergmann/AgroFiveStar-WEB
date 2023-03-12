@@ -13,9 +13,9 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogOverlay,
   Button,
+  Text,
 } from '@chakra-ui/react'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { IconType } from 'react-icons/lib'
@@ -50,7 +50,7 @@ export const MoreOptionsMenuButton: React.FC<
       <MenuButton
         as={IconButton}
         aria-label="Options"
-        icon={<FiMoreHorizontal size={size} color="#3E2448" />}
+        icon={<FiMoreHorizontal size={size} color="black" />}
         _focus={{ focus: 'none' }}
         variant="ghost"
         borderRadius="50%"
@@ -68,7 +68,7 @@ export const MoreOptionsMenuButton: React.FC<
                 icon={
                   <item.icon
                     size={pxToRem(17)}
-                    color={item.color ? item.color : '#8ECEA6'}
+                    color={item.color ? item.color : '#64af46'}
                   />
                 }
                 onClick={
@@ -89,32 +89,26 @@ export const MoreOptionsMenuButton: React.FC<
                     <AlertDialogContent
                       style={{ textAlign: 'center' }}
                     >
-                      <AlertDialogHeader
-                        fontSize="lg"
-                        fontWeight="bold"
-                        color="#3E2448"
-                      >
-                        Essa é uma ação permanente, você tem certeza
-                        que deseja{' '}
-                        {item?.showCancelWarning
-                          ? 'cancelar'
-                          : 'excluir'}
-                        ?
-                      </AlertDialogHeader>
+                      <Text fontWeight="bold" mt={5}>
+                        Tem certeza que deseja excluir este campo?
+                      </Text>
                       <AlertDialogFooter
-                        style={{ justifyContent: 'center' }}
+                        style={{
+                          justifyContent: 'center',
+                        }}
                       >
-                        <Button onClick={handleCancelDelete}>
+                        <Button onClick={handleCancelDelete} w={100}>
                           Cancelar
                         </Button>
                         <Button
                           colorScheme="red"
                           onClick={item.onClick}
-                          ml={10}
+                          w={100}
+                          ml={5}
                         >
                           {item?.showCancelWarning
                             ? 'Alterar'
-                            : 'Deletar'}
+                            : 'Excluir'}
                         </Button>
                       </AlertDialogFooter>
                     </AlertDialogContent>

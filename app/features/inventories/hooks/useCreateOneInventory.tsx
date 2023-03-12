@@ -14,7 +14,8 @@ export default function useCreateInventory({ refetch }) {
 
   async function createOneInventory(values: InputInventoryProps) {
     try {
-      const { name, amount, provider, storage, value } = values
+      const { name, amount, provider, storage, value, fields } =
+        values
 
       const { data: createdInventory } =
         await createOneInventoryMutation({
@@ -25,6 +26,9 @@ export default function useCreateInventory({ refetch }) {
               storage,
               amount,
               value,
+              fields: {
+                id: values?.fields,
+              },
             },
           },
         })
