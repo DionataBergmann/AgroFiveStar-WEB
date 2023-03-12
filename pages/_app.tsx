@@ -9,6 +9,7 @@ import {
   CustomApolloProvider,
 } from '@app/common/apollo'
 import { theme } from '@app/common/theme'
+import { AuthProvider } from '@app/features/auth/context'
 import { ChakraProvider } from '@chakra-ui/react'
 
 function MyApp({ Component, pageProps }) {
@@ -16,11 +17,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <CustomApolloProvider>
-      <ChakraProvider theme={theme}>
-        <Template>
-          <Component {...pageProps} />
-        </Template>
-      </ChakraProvider>
+      <AuthProvider>
+        <ChakraProvider theme={theme}>
+          <Template>
+            <Component {...pageProps} />
+          </Template>
+        </ChakraProvider>
+      </AuthProvider>
     </CustomApolloProvider>
   )
 }

@@ -1,8 +1,11 @@
 import React from 'react'
 
 import { pxToRem } from '@app/common/theme/utils'
+import { getCookie } from '@app/common/utils/cookies'
+import { useAuthContext } from '@app/features/auth/context'
 import {
   Flex,
+  Img,
   Menu,
   MenuButton,
   MenuItem,
@@ -10,6 +13,8 @@ import {
 } from '@chakra-ui/react'
 
 export const Topbar = () => {
+  const { logout } = useAuthContext()
+  const name = getCookie('name')
   return (
     <Flex
       bgColor="primary"
@@ -31,6 +36,7 @@ export const Topbar = () => {
       >
         <Flex
           w="100%"
+          mr="20px"
           justifyContent="flex-end"
           h="100%"
           color="gray.700"
@@ -44,10 +50,21 @@ export const Topbar = () => {
                 w="100%"
                 wrap="wrap"
                 justifyContent="flex-end"
-              ></Flex>
+              >
+                <Img
+                  w={'35px'}
+                  h={'35px'}
+                  src={'/assets/icons/avatar.svg'}
+                  borderRadius="50%"
+                  border="1px solid"
+                />
+              </Flex>
             </MenuButton>
+            <span style={{ marginLeft: '10px', color: 'white' }}>
+              {name}
+            </span>
             <MenuList>
-              <MenuItem>Sair</MenuItem>
+              <MenuItem onClick={logout}>Sair</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
