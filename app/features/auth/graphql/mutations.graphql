@@ -1,0 +1,15 @@
+mutation login($data: AuthInput!) {
+  loginUser(data: $data) {
+    user {
+      id
+      name
+    }
+    token
+  }
+}
+
+mutation createOneUser($input: CreateOneUserInput!) {
+  createOneUser(input: $input) {
+    id
+  }
+}
