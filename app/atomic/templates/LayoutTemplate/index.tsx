@@ -33,6 +33,7 @@ export const LayoutTemplate = ({
           fontWeight="500"
           borderRadius={pxToRem(5)}
           onClick={onCreate}
+          _hover={{ bg: '#53754a' }}
         >
           {createButtonLabel
             ? createButtonLabel

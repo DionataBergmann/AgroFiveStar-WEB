@@ -1,15 +1,19 @@
 mutation createOneProduction($production: CreateProductionInput!) {
-  createOneProduction(input: {production: $production}) {
+  createOneProduction(input: { production: $production }) {
+    id
+    name
+    amount
+    fields {
       id
       name
-			amount
+    }
   }
 }
 
-mutation updateOneProduction($id: ID! $production: UpdateProductionInput!) {
-    updateOneProduction(input: {id: $id, update: $production}) {
-        id
-    }
+mutation updateOneProduction($id: ID!, $production: UpdateProductionInput!) {
+  updateOneProduction(input: { id: $id, update: $production }) {
+    id
+  }
 }
 
 mutation deleteOneProduction($input: DeleteOneProductionInput!) {

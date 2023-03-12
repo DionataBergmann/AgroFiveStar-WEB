@@ -14,12 +14,13 @@ export default function useUpdateOneProduction({ refetch }) {
     id: string
     name: string
     amount: number
+    fields: any
   }
 
   async function updateOneProduction(
     input: UpdateOneProductionProps,
   ) {
-    const { id, name, amount } = input
+    const { id, name, amount, fields } = input
 
     try {
       const { data: updatedProduction } = await mutate({
@@ -28,6 +29,9 @@ export default function useUpdateOneProduction({ refetch }) {
           production: {
             name,
             amount,
+            fields: {
+              id: input?.fields,
+            },
           },
         },
       })
