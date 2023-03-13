@@ -7,6 +7,7 @@ import {
   FormLabelProps,
   Input,
   InputProps,
+  Textarea,
 } from '@chakra-ui/react'
 import { useField, UseFieldConfig } from 'react-final-form'
 
@@ -21,6 +22,7 @@ export type TextFieldProps = {
   errorFieldName?: string
   config?: UseFieldConfig<any>
   hasLabel?: boolean
+  textArea?: boolean
 } & BoxProps
 
 export const TextField = memo(
@@ -31,6 +33,7 @@ export const TextField = memo(
     labelProps,
     isRequired,
     hasLabel = true,
+    textArea,
     ...props
   }: TextFieldProps) => {
     const { input, meta } = useField(name, {})
@@ -51,16 +54,34 @@ export const TextField = memo(
             {label ? label + ':' : null} {isRequired && '*'}
           </FormLabel>
         )}
-        <Input
-          color="boulder"
-          size="md"
-          borderRadius="10px"
-          border="2px solid"
-          maxLength={maximumOfletters}
-          borderColor="rgba(0,0,0,0.05)"
-          {...input}
-          type={props.type}
-        />
+        {!textArea && (
+          <Input
+            color="boulder"
+            size="md"
+            borderRadius="10px"
+            border="2px solid"
+            maxLength={maximumOfletters}
+            borderColor="rgba(0,0,0,0.05)"
+            {...input}
+            type={props.type}
+          />
+        )}
+        {textArea && (
+          <>
+            <Textarea
+              w="100%"
+              name="description"
+              placeholder="Insira uma descrição"
+              size="sm"
+              style={{
+                color: 'boulder',
+                borderRadius: '10px',
+                border: '1px solid',
+                borderColor: 'rgba(0,0,0,0.05)',
+              }}
+            />
+          </>
+        )}
       </FormControl>
     )
   },

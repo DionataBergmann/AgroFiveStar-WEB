@@ -69,6 +69,11 @@ export type CreateManyProductionsInput = {
   productions: Array<CreateProductionInput>;
 };
 
+export type CreateManyTasksInput = {
+  /** Array of records to create */
+  tasks: Array<CreateTaskInput>;
+};
+
 export type CreateManyUsersInput = {
   /** Array of records to create */
   users: Array<CreateUserInput>;
@@ -89,6 +94,11 @@ export type CreateOneProductionInput = {
   production: CreateProductionInput;
 };
 
+export type CreateOneTaskInput = {
+  /** The record to create */
+  task: CreateTaskInput;
+};
+
 export type CreateOneUserInput = {
   /** The record to create */
   user: CreateUserInput;
@@ -98,6 +108,11 @@ export type CreateProductionInput = {
   amount: Scalars['Float'];
   fields?: Maybe<Array<UpdateFieldInput>>;
   name: Scalars['String'];
+};
+
+export type CreateTaskInput = {
+  description: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type CreateUserInput = {
@@ -150,6 +165,11 @@ export type DeleteManyResponse = {
   deletedCount: Scalars['Int'];
 };
 
+export type DeleteManyTasksInput = {
+  /** Filter to find records to delete */
+  filter: TaskDeleteFilter;
+};
+
 export type DeleteManyUsersInput = {
   /** Filter to find records to delete */
   filter: UserDeleteFilter;
@@ -171,6 +191,11 @@ export type DeleteOneInventoryInput = {
 };
 
 export type DeleteOneProductionInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
+export type DeleteOneTaskInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
 };
@@ -660,20 +685,24 @@ export type Mutation = {
   createManyFiles: Array<File>;
   createManyInventories: Array<Inventory>;
   createManyProductions: Array<Production>;
+  createManyTasks: Array<Task>;
   createManyUsers: Array<User>;
   createOneField: Field;
   createOneFile: File;
   createOneInventory: Inventory;
   createOneProduction: Production;
+  createOneTask: Task;
   createOneUser: User;
   deleteManyFiles: DeleteManyResponse;
   deleteManyInventories: DeleteManyResponse;
   deleteManyProductions: DeleteManyResponse;
+  deleteManyTasks: DeleteManyResponse;
   deleteManyUsers: DeleteManyResponse;
   deleteOneFieldAndForget: Field;
   deleteOneFile: FileDeleteResponse;
   deleteOneInventory: InventoryDeleteResponse;
   deleteOneProduction: ProductionDeleteResponse;
+  deleteOneTask: TaskDeleteResponse;
   deleteOneUser: UserDeleteResponse;
   deletePhysicalFile: Scalars['Boolean'];
   loginUser: AuthType;
@@ -690,11 +719,13 @@ export type Mutation = {
   updateManyFiles: UpdateManyResponse;
   updateManyInventories: UpdateManyResponse;
   updateManyProductions: UpdateManyResponse;
+  updateManyTasks: UpdateManyResponse;
   updateManyUsers: UpdateManyResponse;
   updateOneField: Field;
   updateOneFile: File;
   updateOneInventory: Inventory;
   updateOneProduction: Production;
+  updateOneTask: Task;
   updateOneUser: User;
 };
 
@@ -711,6 +742,11 @@ export type MutationCreateManyInventoriesArgs = {
 
 export type MutationCreateManyProductionsArgs = {
   input: CreateManyProductionsInput;
+};
+
+
+export type MutationCreateManyTasksArgs = {
+  input: CreateManyTasksInput;
 };
 
 
@@ -740,6 +776,11 @@ export type MutationCreateOneProductionArgs = {
 };
 
 
+export type MutationCreateOneTaskArgs = {
+  input: CreateOneTaskInput;
+};
+
+
 export type MutationCreateOneUserArgs = {
   input: CreateOneUserInput;
 };
@@ -757,6 +798,11 @@ export type MutationDeleteManyInventoriesArgs = {
 
 export type MutationDeleteManyProductionsArgs = {
   input: DeleteManyProductionsInput;
+};
+
+
+export type MutationDeleteManyTasksArgs = {
+  input: DeleteManyTasksInput;
 };
 
 
@@ -782,6 +828,11 @@ export type MutationDeleteOneInventoryArgs = {
 
 export type MutationDeleteOneProductionArgs = {
   input: DeleteOneProductionInput;
+};
+
+
+export type MutationDeleteOneTaskArgs = {
+  input: DeleteOneTaskInput;
 };
 
 
@@ -865,6 +916,11 @@ export type MutationUpdateManyProductionsArgs = {
 };
 
 
+export type MutationUpdateManyTasksArgs = {
+  input: UpdateManyTasksInput;
+};
+
+
 export type MutationUpdateManyUsersArgs = {
   input: UpdateManyUsersInput;
 };
@@ -889,6 +945,11 @@ export type MutationUpdateOneInventoryArgs = {
 
 export type MutationUpdateOneProductionArgs = {
   input: UpdateOneProductionInput;
+};
+
+
+export type MutationUpdateOneTaskArgs = {
+  input: UpdateOneTaskInput;
 };
 
 
@@ -1087,6 +1148,8 @@ export type Query = {
   me: User;
   production?: Maybe<Production>;
   productions: ProductionConnection;
+  task?: Maybe<Task>;
+  tasks: TaskConnection;
   user?: Maybe<User>;
   users: UserConnection;
 };
@@ -1152,6 +1215,18 @@ export type QueryProductionsArgs = {
   filter?: ProductionFilter;
   paging?: OffsetPaging;
   sorting?: Array<ProductionSort>;
+};
+
+
+export type QueryTaskArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryTasksArgs = {
+  filter?: TaskFilter;
+  paging?: OffsetPaging;
+  sorting?: Array<TaskSort>;
 };
 
 
@@ -1289,6 +1364,124 @@ export type SubscriptionUpdatedOneFieldArgs = {
   input?: Maybe<UpdateOneFieldSubscriptionFilterInput>;
 };
 
+export type Task = {
+  __typename?: 'Task';
+  createdAt: Scalars['DateTime'];
+  deletedAt: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type TaskAggregateGroupBy = {
+  __typename?: 'TaskAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TaskConnection = {
+  __typename?: 'TaskConnection';
+  /** Array of nodes. */
+  nodes: Array<Task>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
+};
+
+export type TaskCountAggregate = {
+  __typename?: 'TaskCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+};
+
+export type TaskDeleteFilter = {
+  and?: Maybe<Array<TaskDeleteFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  description?: Maybe<StringFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<TaskDeleteFilter>>;
+  title?: Maybe<StringFieldComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
+export type TaskDeleteResponse = {
+  __typename?: 'TaskDeleteResponse';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TaskFilter = {
+  and?: Maybe<Array<TaskFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  description?: Maybe<StringFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<TaskFilter>>;
+  title?: Maybe<StringFieldComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
+export type TaskMaxAggregate = {
+  __typename?: 'TaskMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TaskMinAggregate = {
+  __typename?: 'TaskMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TaskSort = {
+  direction: SortDirection;
+  field: TaskSortFields;
+  nulls?: Maybe<SortNulls>;
+};
+
+export enum TaskSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Description = 'description',
+  Id = 'id',
+  Title = 'title',
+  UpdatedAt = 'updatedAt'
+}
+
+export type TaskUpdateFilter = {
+  and?: Maybe<Array<TaskUpdateFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  description?: Maybe<StringFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<TaskUpdateFilter>>;
+  title?: Maybe<StringFieldComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
 export type UpdateFieldInput = {
   acre?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['ID']>;
@@ -1341,6 +1534,13 @@ export type UpdateManyResponse = {
   updatedCount: Scalars['Int'];
 };
 
+export type UpdateManyTasksInput = {
+  /** Filter used to find fields to update */
+  filter: TaskUpdateFilter;
+  /** The update to apply to all records found using the filter */
+  update: UpdateTaskInput;
+};
+
 export type UpdateManyUsersInput = {
   /** Filter used to find fields to update */
   filter: UserUpdateFilter;
@@ -1374,6 +1574,13 @@ export type UpdateOneProductionInput = {
   update: UpdateProductionInput;
 };
 
+export type UpdateOneTaskInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdateTaskInput;
+};
+
 export type UpdateOneUserInput = {
   /** The id of the record to update */
   id: Scalars['ID'];
@@ -1386,6 +1593,12 @@ export type UpdateProductionInput = {
   fields?: Maybe<Array<UpdateFieldInput>>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+};
+
+export type UpdateTaskInput = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  title?: Maybe<Scalars['String']>;
 };
 
 export type UpdateUserInput = {

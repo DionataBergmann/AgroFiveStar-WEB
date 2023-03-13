@@ -1,0 +1,17 @@
+mutation createOneTask($task: CreateTaskInput!) {
+  createOneTask(input: { task: $task }) {
+    id
+  }
+}
+
+mutation updateOneTask($id: ID!, $task: UpdateTaskInput!) {
+  updateOneTask(input: { id: $id, update: $task }) {
+    id
+  }
+}
+
+mutation deleteOneTask($input: DeleteOneTaskInput!) {
+  deleteOneTask(input: $input) {
+    id
+  }
+}
