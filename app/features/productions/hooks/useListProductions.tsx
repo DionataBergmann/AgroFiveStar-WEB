@@ -12,7 +12,7 @@ export default function useListProductions() {
       sorting: [
         {
           field: ProductionSortFields.CreatedAt,
-          direction: SortDirection.Asc,
+          direction: SortDirection.Desc,
           nulls: SortNulls.NullsLast,
         },
       ],
