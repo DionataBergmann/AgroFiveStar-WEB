@@ -11,7 +11,7 @@ const FormContext =
     FormRenderProps<Record<string, any>, Partial<Record<string, any>>>
   >(null)
 
-export default function FormProvider(props: FormProps) {
+export default function FormProvider(props?: FormProps) {
   return (
     <Form {...props}>
       {(formProps) => (

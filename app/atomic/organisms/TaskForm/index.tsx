@@ -1,20 +1,28 @@
 import React from 'react'
 
+import SelectField from '@app/atomic/molecules/SelectField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
 import { pxToRem } from '@app/common/theme/utils'
+import useListUsers from '@app/features/tasks/hooks/useListUsers'
 import { Button, Flex, Grid } from '@chakra-ui/react'
+import ptBR from 'date-fns/locale/pt-BR'
+import { registerLocale } from 'react-datepicker'
 
 interface TaskFormProps {
   handleOnClose?: () => void
   isEditForm?: boolean
+  initialValues?: any
 }
+registerLocale('ptBR', ptBR)
 
 export const TaskForm = React.memo(
-  ({ handleOnClose, isEditForm }: TaskFormProps) => {
+  ({ handleOnClose, isEditForm, initialValues }: TaskFormProps) => {
     const handleSubmit: () => void = useFormContextSelector(
       (s) => s.handleSubmit,
     )
+
+    const { data: usersData } = useListUsers()
 
     return (
       <Flex flexDir="column" width="100%">
@@ -44,8 +52,25 @@ export const TaskForm = React.memo(
             name="description"
             type="text"
           />
+          <SelectField
+            name="userName"
+            label="Funcionário:"
+            placeholder="Selecione um funcionário"
+            value={
+              initialValues?.field?.id
+                ? initialValues?.field?.id
+                : null
+            }
+            isDisabled={initialValues?.field?.id ? true : false}
+          >
+            {usersData?.users?.nodes?.map((value) => (
+              <option key={value.id} value={value.id}>
+                {value.name}
+              </option>
+            ))}
+          </SelectField>
+          <TextField dateField={true} label="Data" name="date" />
         </Grid>
-
         <Flex>
           <Button
             onClick={handleOnClose}

@@ -21,6 +21,9 @@ export default function useRegister() {
               email: values?.email,
               CPF: values?.CPF,
               password: values?.password,
+              roles: {
+                id: '9a389e0e-55e2-4127-8084-385726b03b19',
+              },
             },
           },
         },

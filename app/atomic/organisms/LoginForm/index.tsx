@@ -72,7 +72,7 @@ const LoginForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {message && (
-                <span
+                <Text
                   style={{
                     marginLeft: 'auto',
                     color: 'white',
@@ -80,7 +80,7 @@ const LoginForm = () => {
                   }}
                 >
                   Usuário ou senha incorretos
-                </span>
+                </Text>
               )}
               <Button
                 mt="50px"

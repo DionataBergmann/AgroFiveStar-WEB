@@ -4,12 +4,12 @@ import { pxToRem } from '@app/common/theme/utils'
 import { Button, Flex, Spinner, Text } from '@chakra-ui/react'
 
 interface LayoutTemplateProps {
-  label: string
+  label?: string
   title?: string
   loading?: boolean
   createButtonLabel?: string
-  children: React.ReactNode
-  onCreate: () => void
+  children?: React.ReactNode
+  onCreate?: () => void
 }
 
 export const LayoutTemplate = ({
@@ -23,22 +23,24 @@ export const LayoutTemplate = ({
   return (
     <Flex bgColor="white" flexDirection="column">
       <Flex wrap="wrap" gridGap="10px">
-        <Button
-          variant="outline"
-          bgColor="primary"
-          color="white"
-          w="auto"
-          mr={pxToRem(20)}
-          fontSize="md"
-          fontWeight="500"
-          borderRadius={pxToRem(5)}
-          onClick={onCreate}
-          _hover={{ bg: '#53754a' }}
-        >
-          {createButtonLabel
-            ? createButtonLabel
-            : `Adicionar  ${label}`}
-        </Button>
+        {label && (
+          <Button
+            variant="outline"
+            bgColor="primary"
+            color="white"
+            w="auto"
+            mr={pxToRem(20)}
+            fontSize="md"
+            fontWeight="500"
+            borderRadius={pxToRem(5)}
+            onClick={onCreate}
+            _hover={{ bg: '#53754a' }}
+          >
+            {createButtonLabel
+              ? createButtonLabel
+              : `Adicionar  ${label}`}
+          </Button>
+        )}
       </Flex>
       {title && (
         <Text

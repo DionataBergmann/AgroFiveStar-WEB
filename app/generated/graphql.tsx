@@ -15,6 +15,13 @@ export type Scalars = {
   Upload: any;
 };
 
+export type AddRolesToUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type AuthInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -111,8 +118,11 @@ export type CreateProductionInput = {
 };
 
 export type CreateTaskInput = {
+  date: Scalars['DateTime'];
+  dayOfWeek?: Maybe<Scalars['Float']>;
   description: Scalars['String'];
   title: Scalars['String'];
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type CreateUserInput = {
@@ -120,6 +130,7 @@ export type CreateUserInput = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+  roles: Array<RoleInput>;
   telephone?: Maybe<Scalars['String']>;
 };
 
@@ -682,6 +693,7 @@ export type InventoryUpdateFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addRolesToUser: User;
   createManyFiles: Array<File>;
   createManyInventories: Array<Inventory>;
   createManyProductions: Array<Production>;
@@ -711,11 +723,13 @@ export type Mutation = {
   removeFieldsFromProduction: Production;
   removeInventoriesFromField: Field;
   removeProductionsFromField: Field;
+  removeRolesFromUser: User;
   setFieldImageOnField: Field;
   setFieldsOnInventory: Inventory;
   setFieldsOnProduction: Production;
   setInventoriesOnField: Field;
   setProductionsOnField: Field;
+  setRolesOnUser: User;
   updateManyFiles: UpdateManyResponse;
   updateManyInventories: UpdateManyResponse;
   updateManyProductions: UpdateManyResponse;
@@ -727,6 +741,11 @@ export type Mutation = {
   updateOneProduction: Production;
   updateOneTask: Task;
   updateOneUser: User;
+};
+
+
+export type MutationAddRolesToUserArgs = {
+  input: AddRolesToUserInput;
 };
 
 
@@ -876,6 +895,11 @@ export type MutationRemoveProductionsFromFieldArgs = {
 };
 
 
+export type MutationRemoveRolesFromUserArgs = {
+  input: RemoveRolesFromUserInput;
+};
+
+
 export type MutationSetFieldImageOnFieldArgs = {
   input: SetFieldImageOnFieldInput;
 };
@@ -898,6 +922,11 @@ export type MutationSetInventoriesOnFieldArgs = {
 
 export type MutationSetProductionsOnFieldArgs = {
   input: SetProductionsOnFieldInput;
+};
+
+
+export type MutationSetRolesOnUserArgs = {
+  input: SetRolesOnUserInput;
 };
 
 
@@ -1148,6 +1177,8 @@ export type Query = {
   me: User;
   production?: Maybe<Production>;
   productions: ProductionConnection;
+  role?: Maybe<Role>;
+  roles: RoleConnection;
   task?: Maybe<Task>;
   tasks: TaskConnection;
   user?: Maybe<User>;
@@ -1218,6 +1249,18 @@ export type QueryProductionsArgs = {
 };
 
 
+export type QueryRoleArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryRolesArgs = {
+  filter?: RoleFilter;
+  paging?: OffsetPaging;
+  sorting?: Array<RoleSort>;
+};
+
+
 export type QueryTaskArgs = {
   id: Scalars['ID'];
 };
@@ -1276,6 +1319,139 @@ export type RemoveProductionsFromFieldInput = {
   relationId: Scalars['ID'];
 };
 
+export type RemoveRolesFromUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type Role = {
+  __typename?: 'Role';
+  createdAt: Scalars['DateTime'];
+  deletedAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  name: RolesEnum;
+  updatedAt: Scalars['DateTime'];
+};
+
+export type RoleAggregateGroupBy = {
+  __typename?: 'RoleAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<RolesEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type RoleConnection = {
+  __typename?: 'RoleConnection';
+  /** Array of nodes. */
+  nodes: Array<Role>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+};
+
+export type RoleCountAggregate = {
+  __typename?: 'RoleCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+};
+
+export type RoleFilter = {
+  and?: Maybe<Array<RoleFilter>>;
+  createdAt?: Maybe<DateFieldComparison>;
+  deletedAt?: Maybe<DateFieldComparison>;
+  id?: Maybe<StringFieldComparison>;
+  name?: Maybe<RolesEnumFilterComparison>;
+  or?: Maybe<Array<RoleFilter>>;
+  updatedAt?: Maybe<DateFieldComparison>;
+};
+
+export type RoleInput = {
+  id: Scalars['String'];
+  name?: Maybe<RolesEnum>;
+};
+
+export type RoleInputDto = {
+  __typename?: 'RoleInputDTO';
+  id: Scalars['String'];
+  name?: Maybe<RolesEnum>;
+};
+
+export type RoleInputDtoFilter = {
+  and?: Maybe<Array<RoleInputDtoFilter>>;
+  name?: Maybe<RolesEnumFilterComparison>;
+  or?: Maybe<Array<RoleInputDtoFilter>>;
+};
+
+export type RoleInputDtoSort = {
+  direction: SortDirection;
+  field: RoleInputDtoSortFields;
+  nulls?: Maybe<SortNulls>;
+};
+
+export enum RoleInputDtoSortFields {
+  Name = 'name'
+}
+
+export type RoleMaxAggregate = {
+  __typename?: 'RoleMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<RolesEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type RoleMinAggregate = {
+  __typename?: 'RoleMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<RolesEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type RoleSort = {
+  direction: SortDirection;
+  field: RoleSortFields;
+  nulls?: Maybe<SortNulls>;
+};
+
+export enum RoleSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Id = 'id',
+  Name = 'name',
+  UpdatedAt = 'updatedAt'
+}
+
+export enum RolesEnum {
+  Employee = 'EMPLOYEE',
+  SuperAdmin = 'SUPER_ADMIN'
+}
+
+export type RolesEnumFilterComparison = {
+  eq?: Maybe<RolesEnum>;
+  gt?: Maybe<RolesEnum>;
+  gte?: Maybe<RolesEnum>;
+  iLike?: Maybe<RolesEnum>;
+  in?: Maybe<Array<RolesEnum>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  like?: Maybe<RolesEnum>;
+  lt?: Maybe<RolesEnum>;
+  lte?: Maybe<RolesEnum>;
+  neq?: Maybe<RolesEnum>;
+  notILike?: Maybe<RolesEnum>;
+  notIn?: Maybe<Array<RolesEnum>>;
+  notLike?: Maybe<RolesEnum>;
+};
+
 export type SetFieldImageOnFieldInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -1309,6 +1485,13 @@ export type SetProductionsOnFieldInput = {
   id: Scalars['ID'];
   /** The id of relation. */
   relationId: Scalars['ID'];
+};
+
+export type SetRolesOnUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
 };
 
 /** Sort Directions */
@@ -1367,21 +1550,32 @@ export type SubscriptionUpdatedOneFieldArgs = {
 export type Task = {
   __typename?: 'Task';
   createdAt: Scalars['DateTime'];
+  date: Scalars['DateTime'];
+  dayOfWeek?: Maybe<Scalars['Float']>;
   deletedAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['String'];
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type TaskAggregateGroupBy = {
   __typename?: 'TaskAggregateGroupBy';
   createdAt?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['DateTime']>;
+  dayOfWeek?: Maybe<Scalars['Float']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  userName?: Maybe<Scalars['String']>;
+};
+
+export type TaskAvgAggregate = {
+  __typename?: 'TaskAvgAggregate';
+  dayOfWeek?: Maybe<Scalars['Float']>;
 };
 
 export type TaskConnection = {
@@ -1397,63 +1591,81 @@ export type TaskConnection = {
 export type TaskCountAggregate = {
   __typename?: 'TaskCountAggregate';
   createdAt?: Maybe<Scalars['Int']>;
+  date?: Maybe<Scalars['Int']>;
+  dayOfWeek?: Maybe<Scalars['Int']>;
   deletedAt?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
+  userName?: Maybe<Scalars['Int']>;
 };
 
 export type TaskDeleteFilter = {
   and?: Maybe<Array<TaskDeleteFilter>>;
   createdAt?: Maybe<DateFieldComparison>;
+  date?: Maybe<DateFieldComparison>;
+  dayOfWeek?: Maybe<NumberFieldComparison>;
   deletedAt?: Maybe<DateFieldComparison>;
   description?: Maybe<StringFieldComparison>;
   id?: Maybe<StringFieldComparison>;
   or?: Maybe<Array<TaskDeleteFilter>>;
   title?: Maybe<StringFieldComparison>;
   updatedAt?: Maybe<DateFieldComparison>;
+  userName?: Maybe<StringFieldComparison>;
 };
 
 export type TaskDeleteResponse = {
   __typename?: 'TaskDeleteResponse';
   createdAt?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['DateTime']>;
+  dayOfWeek?: Maybe<Scalars['Float']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type TaskFilter = {
   and?: Maybe<Array<TaskFilter>>;
   createdAt?: Maybe<DateFieldComparison>;
+  date?: Maybe<DateFieldComparison>;
+  dayOfWeek?: Maybe<NumberFieldComparison>;
   deletedAt?: Maybe<DateFieldComparison>;
   description?: Maybe<StringFieldComparison>;
   id?: Maybe<StringFieldComparison>;
   or?: Maybe<Array<TaskFilter>>;
   title?: Maybe<StringFieldComparison>;
   updatedAt?: Maybe<DateFieldComparison>;
+  userName?: Maybe<StringFieldComparison>;
 };
 
 export type TaskMaxAggregate = {
   __typename?: 'TaskMaxAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['DateTime']>;
+  dayOfWeek?: Maybe<Scalars['Float']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type TaskMinAggregate = {
   __typename?: 'TaskMinAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['DateTime']>;
+  dayOfWeek?: Maybe<Scalars['Float']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type TaskSort = {
@@ -1464,22 +1676,33 @@ export type TaskSort = {
 
 export enum TaskSortFields {
   CreatedAt = 'createdAt',
+  Date = 'date',
+  DayOfWeek = 'dayOfWeek',
   DeletedAt = 'deletedAt',
   Description = 'description',
   Id = 'id',
   Title = 'title',
-  UpdatedAt = 'updatedAt'
+  UpdatedAt = 'updatedAt',
+  UserName = 'userName'
 }
+
+export type TaskSumAggregate = {
+  __typename?: 'TaskSumAggregate';
+  dayOfWeek?: Maybe<Scalars['Float']>;
+};
 
 export type TaskUpdateFilter = {
   and?: Maybe<Array<TaskUpdateFilter>>;
   createdAt?: Maybe<DateFieldComparison>;
+  date?: Maybe<DateFieldComparison>;
+  dayOfWeek?: Maybe<NumberFieldComparison>;
   deletedAt?: Maybe<DateFieldComparison>;
   description?: Maybe<StringFieldComparison>;
   id?: Maybe<StringFieldComparison>;
   or?: Maybe<Array<TaskUpdateFilter>>;
   title?: Maybe<StringFieldComparison>;
   updatedAt?: Maybe<DateFieldComparison>;
+  userName?: Maybe<StringFieldComparison>;
 };
 
 export type UpdateFieldInput = {
@@ -1596,9 +1819,12 @@ export type UpdateProductionInput = {
 };
 
 export type UpdateTaskInput = {
+  date?: Maybe<Scalars['DateTime']>;
+  dayOfWeek?: Maybe<Scalars['Float']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   title?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type UpdateUserInput = {
@@ -1607,6 +1833,7 @@ export type UpdateUserInput = {
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  roles?: Maybe<Array<RoleInput>>;
   telephone?: Maybe<Scalars['String']>;
 };
 
@@ -1617,7 +1844,14 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
+  roles: Array<RoleInputDto>;
   telephone?: Maybe<Scalars['String']>;
+};
+
+
+export type UserRolesArgs = {
+  filter?: RoleInputDtoFilter;
+  sorting?: Array<RoleInputDtoSort>;
 };
 
 export type UserAggregateGroupBy = {
@@ -1670,7 +1904,14 @@ export type UserFilter = {
   email?: Maybe<StringFieldComparison>;
   name?: Maybe<StringFieldComparison>;
   or?: Maybe<Array<UserFilter>>;
+  roles?: Maybe<UserFilterRoleInputDtoFilter>;
   telephone?: Maybe<StringFieldComparison>;
+};
+
+export type UserFilterRoleInputDtoFilter = {
+  and?: Maybe<Array<UserFilterRoleInputDtoFilter>>;
+  name?: Maybe<RolesEnumFilterComparison>;
+  or?: Maybe<Array<UserFilterRoleInputDtoFilter>>;
 };
 
 export type UserMaxAggregate = {

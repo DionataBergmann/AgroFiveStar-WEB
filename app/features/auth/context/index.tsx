@@ -49,7 +49,10 @@ export function AuthProvider({ children }) {
       try {
         const { data } = await loginMutation(email, password)
 
-        if (data.loginUser.token) {
+        if (
+          data.loginUser.token &&
+          data.loginUser.user?.roles?.[0]?.name === 'SUPER_ADMIN'
+        ) {
           setCookie('authToken', data.loginUser.token, undefined)
           setCookie('name', data.loginUser.user?.name, undefined)
           await getMe()

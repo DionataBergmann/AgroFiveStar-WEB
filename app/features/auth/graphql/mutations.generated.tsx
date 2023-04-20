@@ -16,6 +16,10 @@ export type LoginMutation = (
     & { user: (
       { __typename?: 'User' }
       & Pick<Types.User, 'id' | 'name'>
+      & { roles: Array<(
+        { __typename?: 'RoleInputDTO' }
+        & Pick<Types.RoleInputDto, 'id' | 'name'>
+      )> }
     ) }
   ) }
 );
@@ -40,6 +44,10 @@ export const LoginDocument = gql`
     user {
       id
       name
+      roles {
+        id
+        name
+      }
     }
     token
   }
