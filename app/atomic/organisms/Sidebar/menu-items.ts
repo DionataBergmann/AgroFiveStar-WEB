@@ -2,6 +2,7 @@ import { BsBook, BsHouse } from 'react-icons/bs'
 import { FaTasks } from 'react-icons/fa'
 import { FiBox } from 'react-icons/fi'
 import { IoIosFlower } from 'react-icons/io'
+import { HiDocumentReport } from "react-icons/hi";
 
 export const menuItems = [
   {
@@ -19,11 +20,11 @@ export const menuItems = [
     href: '/tarefas',
     icon: FaTasks,
   },
-  // {
-  //   label: 'Financeiro',
-  //   href: '/financial',
-  //   icon: BsCurrencyDollar,
-  // },
+  {
+    label: 'Relatórios',
+    href: '/relatorios',
+    icon: HiDocumentReport,
+  },
   {
     label: 'Estoque',
     href: '/estoque',
