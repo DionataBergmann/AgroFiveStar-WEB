@@ -8,6 +8,18 @@ query getTasks(
       id
       title
       description
+      date
+      dayOfWeek
+      createdAt
+    }
+  }
+}
+
+query listUsers {
+  users {
+    nodes {
+      id
+      name
     }
   }
 }
