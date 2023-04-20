@@ -1,5 +1,6 @@
 import { catchError } from '@app/common/errors/catch-and-toast-error'
 import { useToast } from '@chakra-ui/react'
+import moment from 'moment'
 
 import { useCreateOneTaskMutation } from '../graphql/mutation.generated'
 import { InputTaskProps } from '../helper'
@@ -14,13 +15,18 @@ export default function useCreateTask({ refetch }) {
 
   async function createOneTask(values: InputTaskProps) {
     try {
-      const { title, description } = values
+      const { title, description, date, userName } = values
+
+      const dayOfWeek = moment(date).weekday()
 
       const { data: createdTask } = await createOneTaskMutation({
         variables: {
           task: {
             title,
             description,
+            date,
+            dayOfWeek,
+            userName,
           },
         },
       })

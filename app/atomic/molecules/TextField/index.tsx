@@ -1,14 +1,19 @@
-import React, { memo } from 'react'
+import React, { forwardRef, memo, useState } from 'react'
 
+import { simpleDateFormat } from '@app/common/utils/simpleFormat'
 import {
   BoxProps,
+  Flex,
   FormControl,
   FormLabel,
   FormLabelProps,
   Input,
   InputProps,
+  Text,
   Textarea,
 } from '@chakra-ui/react'
+import ptBR from 'date-fns/locale/pt-BR'
+import DatePicker, { registerLocale } from 'react-datepicker'
 import { useField, UseFieldConfig } from 'react-final-form'
 
 export type TextFieldProps = {
@@ -23,6 +28,7 @@ export type TextFieldProps = {
   config?: UseFieldConfig<any>
   hasLabel?: boolean
   textArea?: boolean
+  dateField?: boolean
 } & BoxProps
 
 export const TextField = memo(
@@ -34,9 +40,42 @@ export const TextField = memo(
     isRequired,
     hasLabel = true,
     textArea,
+    dateField,
     ...props
   }: TextFieldProps) => {
+    const [startDate, setStartDate] = useState()
     const { input, meta } = useField(name, {})
+
+    registerLocale('ptBR', ptBR)
+
+    const ExampleCustomInput = forwardRef(
+      ({ value, onClick }: any, ref: any) => (
+        <Flex
+          onClick={onClick}
+          ref={ref}
+          p="10px 5px"
+          cursor="pointer"
+          h="38px"
+          w="120%"
+          alignItems="center"
+        >
+          {!value && (
+            <Flex
+              px="5px"
+              alignItems="center"
+              w="100%"
+              h="100%"
+              pos="absolute"
+            >
+              <Text mt="4px" color="gray.400">
+                DD/MM/AAAA
+              </Text>
+            </Flex>
+          )}
+          {simpleDateFormat(value)}
+        </Flex>
+      ),
+    )
 
     return (
       <FormControl
@@ -54,7 +93,7 @@ export const TextField = memo(
             {label ? label + ':' : null} {isRequired && '*'}
           </FormLabel>
         )}
-        {!textArea && (
+        {!textArea && !dateField && (
           <Input
             color="boulder"
             size="md"
@@ -66,11 +105,10 @@ export const TextField = memo(
             type={props.type}
           />
         )}
-        {textArea && (
+        {textArea && !dateField && (
           <>
             <Textarea
               w="100%"
-              name="description"
               placeholder="Insira uma descrição"
               size="sm"
               style={{
@@ -79,6 +117,18 @@ export const TextField = memo(
                 border: '1px solid',
                 borderColor: 'rgba(0,0,0,0.05)',
               }}
+              {...input}
+            />
+          </>
+        )}
+        {dateField && (
+          <>
+            <DatePicker
+              selected={startDate}
+              locale="ptBR"
+              dateFormat="dd/MM/yyyy"
+              customInput={<ExampleCustomInput />}
+              {...input}
             />
           </>
         )}

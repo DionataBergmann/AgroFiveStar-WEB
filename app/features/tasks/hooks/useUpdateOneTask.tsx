@@ -14,10 +14,12 @@ export default function useUpdateOneTask({ refetch }) {
     id: string
     title: string
     description: string
+    userName: string
+    date: Date
   }
 
   async function updateOneTask(input: UpdateOneTaskProps) {
-    const { id, title, description } = input
+    const { id, title, description, date, userName } = input
 
     try {
       const { data: updatedTask } = await mutate({
@@ -26,6 +28,8 @@ export default function useUpdateOneTask({ refetch }) {
           task: {
             title,
             description,
+            userName,
+            date,
           },
         },
       })
