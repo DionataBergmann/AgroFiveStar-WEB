@@ -5,12 +5,13 @@ import { getCookie } from '@app/common/utils/cookies'
 import { useAuthContext } from '@app/features/auth/context'
 import {
   Flex,
-  Img,
+  Icon,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
 } from '@chakra-ui/react'
+import { AiOutlineUser } from 'react-icons/ai'
 
 export const Topbar = () => {
   const { logout } = useAuthContext()
@@ -51,12 +52,20 @@ export const Topbar = () => {
                 wrap="wrap"
                 justifyContent="flex-end"
               >
-                <Img
+                {/* <Img
                   w={'35px'}
                   h={'35px'}
                   src={'/assets/icons/avatar.svg'}
                   borderRadius="50%"
                   border="1px solid"
+                /> */}
+                <Icon
+                  as={AiOutlineUser}
+                  w={'30px'}
+                  h={'30px'}
+                  borderRadius="50%"
+                  border="1px solid"
+                  color="white"
                 />
               </Flex>
             </MenuButton>

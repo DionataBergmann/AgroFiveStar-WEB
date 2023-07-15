@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { Modal } from '@app/atomic/molecules/Modal'
 import { ProductionCard } from '@app/atomic/molecules/ProductionCard'
+import { AddOrRemoveProductionForm } from '@app/atomic/organisms/AddOrRemoveProductionForm'
 import FormProvider from '@app/atomic/organisms/FormProvider'
 import { ProductionForm } from '@app/atomic/organisms/ProductionForm'
 import { InputProductionProps } from '@app/features/productions/helper'
@@ -9,11 +10,10 @@ import useCreateProduction from '@app/features/productions/hooks/useCreateOnePro
 import useDeleteOneProduction from '@app/features/productions/hooks/useDeleteOneProduction'
 import useListProductions from '@app/features/productions/hooks/useListProductions'
 import useUpdateOneProduction from '@app/features/productions/hooks/useUpdateOneProduction'
+import useUpdateOneProductionValue from '@app/features/productions/hooks/useUpdateOneProductValue'
 import { Flex, Grid, Text } from '@chakra-ui/react'
 
 import { LayoutTemplate } from '../LayoutTemplate'
-import { AddOrRemoveProductionForm } from '@app/atomic/organisms/AddOrRemoveProductionForm'
-import useUpdateOneProductionValue from '@app/features/productions/hooks/useUpdateOneProductValue'
 
 export const ProductionsTemplate = () => {
   const defaultInitialValues: InputProductionProps = {
@@ -27,7 +27,8 @@ export const ProductionsTemplate = () => {
     useState<InputProductionProps>(defaultInitialValues)
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [addOrRemoveModalIsOpen, setAddOrRemoveIsOpen] = useState(false)
+  const [addOrRemoveModalIsOpen, setAddOrRemoveIsOpen] =
+    useState(false)
   const [isEditForm, setIsEditForm] = useState(false)
   const [add, setAdd] = useState(true)
   const [remove, setRemove] = useState(false)
@@ -36,7 +37,9 @@ export const ProductionsTemplate = () => {
 
   const { createOneProduction } = useCreateProduction({ refetch })
   const { updateOneProduction } = useUpdateOneProduction({ refetch })
-  const { updateOneProductionValue } = useUpdateOneProductionValue({ refetch })
+  const { updateOneProductionValue } = useUpdateOneProductionValue({
+    refetch,
+  })
   const { removeProduction } = useDeleteOneProduction()
 
   function handleCloseProductionModal() {
@@ -62,16 +65,24 @@ export const ProductionsTemplate = () => {
       initialValues={addOrRemoveModalIsOpen ? 0 : initialValues}
       onSubmit={async (values, form) => {
         if (isEditForm) {
-          if (addOrRemoveModalIsOpen) { await updateOneProductionValue(values as any, initialValues) } else {
+          if (addOrRemoveModalIsOpen) {
+            await updateOneProductionValue(
+              values as any,
+              initialValues,
+            )
+          } else {
             await updateOneProduction(values as any)
           }
         } else {
           if (addOrRemoveModalIsOpen) {
-            await updateOneProductionValue(values as any, initialValues, add)
+            await updateOneProductionValue(
+              values as any,
+              initialValues,
+              add,
+            )
           } else {
             await createOneProduction(values as any)
           }
-
         }
         handleCloseProductionModal()
         handleCloseModal()
@@ -101,7 +112,7 @@ export const ProductionsTemplate = () => {
               Nome do item
             </Text>
             <Text fontWeight="bold" fontSize="sm">
-              Quantidade
+              Quantidade (t)
             </Text>
           </Grid>
           {data?.productions?.nodes?.map((item) => (
@@ -144,7 +155,14 @@ export const ProductionsTemplate = () => {
           closable
           isCentered
         >
-          <AddOrRemoveProductionForm initialValues={initialValues} handleOnClose={handleCloseProductionModal} setAdd={setAdd} add={add} setRemove={setRemove} remove={remove} />
+          <AddOrRemoveProductionForm
+            initialValues={initialValues}
+            handleOnClose={handleCloseProductionModal}
+            setAdd={setAdd}
+            add={add}
+            setRemove={setRemove}
+            remove={remove}
+          />
         </Modal>
       </LayoutTemplate>
     </FormProvider>

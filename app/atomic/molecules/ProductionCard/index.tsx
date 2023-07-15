@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { InputProductionProps } from '@app/features/productions/helper'
 import { Production } from '@app/generated/graphql'
-import { Button, Flex, Grid, Modal, Text } from '@chakra-ui/react'
+import { Button, Flex, Grid, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { FiEdit2 } from 'react-icons/fi'
 
 import { MoreOptionsMenuButton } from '../MoreOptionsButtons'
-import { FieldForm } from '@app/atomic/organisms/FieldForm'
-import { AddOrRemoveProductionForm } from '@app/atomic/organisms/AddOrRemoveProductionForm'
 
 type Props = {
   data: Production
@@ -18,7 +16,7 @@ type Props = {
   field: any
   amount: number
   onEdit?: any
-  setAddOrRemoveIsOpen?: boolean
+  setAddOrRemoveIsOpen?: any
   onDelete?: (id: string) => Promise<void>
   setInitialValues?: (value: InputProductionProps) => void
 }
@@ -50,7 +48,6 @@ export const ProductionCard: React.FC<Props> = ({
       amount: amount,
       field: field,
     })
-
   }
 
   return (
@@ -94,7 +91,14 @@ export const ProductionCard: React.FC<Props> = ({
             {data?.amount}
           </Text>
         </Grid>
-        <Button h={5} right={10} position="absolute" onClick={() => { setAddOrRemoveIsOpen(true), handleOnEditValue() }}>
+        <Button
+          h={5}
+          right={10}
+          position="absolute"
+          onClick={() => {
+            setAddOrRemoveIsOpen(true), handleOnEditValue()
+          }}
+        >
           +/-
         </Button>
         <MoreOptionsMenuButton
@@ -114,7 +118,6 @@ export const ProductionCard: React.FC<Props> = ({
           positionConfig={{ top: '0px', right: '0px' }}
         />
       </Flex>
-
     </Flex>
   )
 }

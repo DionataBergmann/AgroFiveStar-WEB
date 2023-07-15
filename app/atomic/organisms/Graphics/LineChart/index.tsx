@@ -34,11 +34,11 @@ ChartJS.register(
 )
 
 export const LineChart = () => {
-  const [fieldId, setFieldId] = useState()
+  const [fieldId, setFieldId] = useState<any>()
   const { data: productionData, refetch } = useListProductions()
   const { data: fieldData } = useListFields()
   const [listAsTon, setListAsTon] = useState(true)
-  const [kilograms, setKilograms] = useState(50)
+  const [kilograms, setKilograms] = useState<any>(50)
 
   refetch({
     filter: {
