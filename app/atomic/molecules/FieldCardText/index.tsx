@@ -62,6 +62,7 @@ export const FieldCardText = React.memo(
         display="flex"
         justifyContent="space-evenly"
         alignItems="center"
+        mt={1}
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
