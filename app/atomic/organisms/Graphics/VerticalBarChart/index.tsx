@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import useListProductions from '@app/features/productions/hooks/useListProductions'
+import useListFields from '@app/features/fields/hooks/useListField'
 import useListStorages from '@app/features/storage/hooks/useListStorages'
-import { Flex } from '@chakra-ui/react'
+import {
+  Flex,
+  Radio,
+  RadioGroup,
+  Select as CSelect,
+  Stack,
+} from '@chakra-ui/react'
 import {
   BarElement,
   CategoryScale,
@@ -26,23 +32,10 @@ ChartJS.register(
   Legend,
 )
 export const VerticalBarChart = () => {
-  const { data: productionData } = useListProductions()
   const { data: storageData } = useListStorages()
-  // console.log(storageData?.storages?.nodes)
-
-  const options = {
-    responsive: true,
-    width: 200,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Relatórios de estoque',
-      },
-    },
-  }
+  const { data: fieldData } = useListFields()
+  const [listAsTon, setListAsTon] = useState(true)
+  const [kilograms, setKilograms] = useState<any>(50)
 
   const milho = []
   storageData?.storages?.nodes?.map((value) => {
@@ -64,7 +57,6 @@ export const VerticalBarChart = () => {
   })
 
   const color = []
-  console.log(color)
 
   useEffect(() => {
     if (
@@ -87,27 +79,61 @@ export const VerticalBarChart = () => {
   const storageName = storageData?.storages?.nodes?.map(
     (v) => v?.name,
   )
-  const storageAmount = storageData?.storages?.nodes?.map(
-    (v) => v?.inventories?.amount,
+  const storageAmount = storageData?.storages?.nodes?.map((v) =>
+    listAsTon
+      ? v?.inventories?.amount
+      : (v?.inventories?.amount / kilograms)?.toFixed(1),
   )
 
   return (
-    <Flex flexDir="row" justifyContent="center">
-      <Plot
-        data={[
-          {
-            type: 'bar',
-            x: storageName,
-            y: storageAmount,
-            marker: { color: color },
-          },
-        ]}
-        layout={{
-          width: 920,
-          height: 440,
-          title: 'Relatório Geral de Estoque',
-        }}
-      />
+    <Flex flexDir="column" justifyContent="center">
+      <RadioGroup defaultValue="true">
+        <Stack direction="row" mt={10}>
+          <Radio
+            value="true"
+            defaultChecked={true}
+            colorScheme="green"
+            size="sm"
+            onChange={() => setListAsTon(true)}
+          >
+            Em toneladas
+          </Radio>
+          <Radio
+            value="false"
+            colorScheme="green"
+            pl={10}
+            size="sm"
+            onChange={() => setListAsTon(false)}
+          >
+            Em sacas de
+          </Radio>
+          <CSelect
+            w="86px"
+            size="sm"
+            onChange={(value) => setKilograms(value?.target?.value)}
+          >
+            <option value="50">50 Kg</option>
+            <option value="60">60 Kg</option>
+          </CSelect>
+        </Stack>
+      </RadioGroup>
+      <Flex flexDir="row" justifyContent="center">
+        <Plot
+          data={[
+            {
+              type: 'bar',
+              x: storageName,
+              y: storageAmount,
+              marker: { color: color },
+            },
+          ]}
+          layout={{
+            width: 920,
+            height: 440,
+            title: 'Relatório Geral de Estoque',
+          }}
+        />
+      </Flex>
     </Flex>
   )
 }

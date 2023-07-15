@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { InputInventoryProps } from '@app/features/inventories/helper'
-import { Inventory } from '@app/generated/graphql'
 import { Flex, Grid, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
 import { FaRegTrashAlt } from 'react-icons/fa'
@@ -10,13 +9,13 @@ import { FiEdit2 } from 'react-icons/fi'
 import { MoreOptionsMenuButton } from '../MoreOptionsButtons'
 
 type Props = {
-  data: Inventory
+  data: any
   id?: string
   onEdit?: any
   name?: string
   provider?: string
   amount?: number
-  storage?: string
+  storage?: any
   value?: number
   field?: any
   onDelete?: (id: string) => Promise<void>

@@ -36,6 +36,8 @@ export const GoogleMaps = React.memo(
       libraries: ['drawing'],
     })
 
+    const drawingModes: any = ['polygon']
+
     const [map, setMap] = React.useState(null)
     const [hectares, setHectares] = React.useState(0)
     const [isHectares, setIsHectares] = React.useState(false)
@@ -142,7 +144,7 @@ export const GoogleMaps = React.memo(
               drawingControl: true,
               drawingControlOptions: {
                 position: google.maps.ControlPosition.TOP_CENTER,
-                drawingModes: ['polygon'],
+                drawingModes,
               },
               polygonOptions: {
                 editable: true,
