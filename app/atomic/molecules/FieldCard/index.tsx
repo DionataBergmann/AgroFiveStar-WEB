@@ -9,7 +9,7 @@ import { FiEdit2 } from 'react-icons/fi'
 import { MoreOptionsMenuButton } from '../MoreOptionsButtons'
 
 export type FieldCardProps = {
-  data: News
+  data: any
   id?: string
   name: string
   acre: string
@@ -76,7 +76,7 @@ export const FieldCard: React.FC<FieldCardProps> = ({
             showDeleteWarning: true,
           },
         ]}
-        positionConfig={{ top: '0px', right: '0px' }}
+        positionConfig={{ top: -1, right: '0px' }}
       />
     </Card>
   )
