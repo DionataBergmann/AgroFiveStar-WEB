@@ -12,6 +12,8 @@ import useUpdateOneProduction from '@app/features/productions/hooks/useUpdateOne
 import { Flex, Grid, Text } from '@chakra-ui/react'
 
 import { LayoutTemplate } from '../LayoutTemplate'
+import { AddOrRemoveProductionForm } from '@app/atomic/organisms/AddOrRemoveProductionForm'
+import useUpdateOneProductionValue from '@app/features/productions/hooks/useUpdateOneProductValue'
 
 export const ProductionsTemplate = () => {
   const defaultInitialValues: InputProductionProps = {
@@ -25,12 +27,16 @@ export const ProductionsTemplate = () => {
     useState<InputProductionProps>(defaultInitialValues)
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [addOrRemoveModalIsOpen, setAddOrRemoveIsOpen] = useState(false)
   const [isEditForm, setIsEditForm] = useState(false)
+  const [add, setAdd] = useState(true)
+  const [remove, setRemove] = useState(false)
 
   const { data, loading, refetch } = useListProductions()
 
   const { createOneProduction } = useCreateProduction({ refetch })
   const { updateOneProduction } = useUpdateOneProduction({ refetch })
+  const { updateOneProductionValue } = useUpdateOneProductionValue({ refetch })
   const { removeProduction } = useDeleteOneProduction()
 
   function handleCloseProductionModal() {
@@ -47,16 +53,28 @@ export const ProductionsTemplate = () => {
     setModalIsOpen(true)
   }
 
+  function handleCloseModal() {
+    setAddOrRemoveIsOpen(false)
+  }
+
   return (
     <FormProvider
-      initialValues={initialValues}
+      initialValues={addOrRemoveModalIsOpen ? 0 : initialValues}
       onSubmit={async (values, form) => {
         if (isEditForm) {
-          await updateOneProduction(values as any)
+          if (addOrRemoveModalIsOpen) { await updateOneProductionValue(values as any, initialValues) } else {
+            await updateOneProduction(values as any)
+          }
         } else {
-          await createOneProduction(values as any)
+          if (addOrRemoveModalIsOpen) {
+            await updateOneProductionValue(values as any, initialValues, add)
+          } else {
+            await createOneProduction(values as any)
+          }
+
         }
         handleCloseProductionModal()
+        handleCloseModal()
         form.reset()
       }}
     >
@@ -97,6 +115,7 @@ export const ProductionsTemplate = () => {
               onEdit={handleEditProduction}
               onDelete={removeProduction}
               setInitialValues={setInitialValues}
+              setAddOrRemoveIsOpen={setAddOrRemoveIsOpen}
             />
           ))}
         </Grid>
@@ -116,6 +135,16 @@ export const ProductionsTemplate = () => {
             isEditForm={isEditForm}
             initialValues={initialValues}
           />
+        </Modal>
+        <Modal
+          isOpen={addOrRemoveModalIsOpen}
+          onClose={handleCloseModal}
+          title={'Adicionar ou remover quantidade'}
+          size="2xl"
+          closable
+          isCentered
+        >
+          <AddOrRemoveProductionForm initialValues={initialValues} handleOnClose={handleCloseProductionModal} setAdd={setAdd} add={add} setRemove={setRemove} remove={remove} />
         </Modal>
       </LayoutTemplate>
     </FormProvider>

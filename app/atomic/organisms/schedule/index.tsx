@@ -2,9 +2,18 @@ import { useEffect, useState } from 'react'
 
 import { InputTaskProps } from '@app/features/tasks/helper'
 import useListTasks from '@app/features/tasks/hooks/useListTasks'
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
+import useListUsers from '@app/features/tasks/hooks/useListUsers'
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Text,
+} from '@chakra-ui/react'
 import { addDays } from 'date-fns'
 import moment from 'moment'
+import { GrUserWorker } from 'react-icons/gr'
 
 import { setWeek } from './setWeek'
 
@@ -27,6 +36,8 @@ export const WeekScheduleTable: React.FC<Props> = ({
   })
 
   const { data: taskDate, refetch } = useListTasks()
+
+  const { data: usersData } = useListUsers()
 
   useEffect(() => {
     setInterval({
@@ -52,7 +63,6 @@ export const WeekScheduleTable: React.FC<Props> = ({
   }, [referenceDate, refetch, dateInterval])
 
   function handleOnEdit(values) {
-
     setInitialValues({
       id: values?.value?.id,
       title: values?.value?.title,
@@ -65,6 +75,13 @@ export const WeekScheduleTable: React.FC<Props> = ({
   }
 
   const TaskCard = (value) => {
+    let user = ''
+    usersData?.users?.nodes?.map((item) => {
+      if (item?.CPF === value?.value?.userName) {
+        user = item?.name
+      }
+    })
+
     return (
       <Flex
         flexDirection="column"
@@ -103,6 +120,23 @@ export const WeekScheduleTable: React.FC<Props> = ({
           >
             {value?.value?.description}
           </Text>
+          <Flex
+            flexDir="row"
+            justifyContent="center"
+            textAlign="center"
+            mt="5px"
+          >
+            <Icon as={GrUserWorker} color="gray" />
+            <Text
+              fontSize="12px"
+              lineHeight="15.96px"
+              fontWeight="400"
+              textAlign="center"
+              ml="5px"
+            >
+              {user}
+            </Text>
+          </Flex>
         </Flex>
       </Flex>
     )

@@ -1,0 +1,18 @@
+mutation createOneStorage($storage: CreateStorageInput!) {
+  createOneStorage(input: { storage: $storage }) {
+    id
+    name
+    amount
+  }
+}
+mutation updateOneStorage($id: ID!, $storage: UpdateStorageInput!) {
+  updateOneStorage(input: { id: $id, update: $storage }) {
+    id
+  }
+}
+
+mutation deleteOneStorage($input: DeleteOneStorageInput!) {
+  deleteOneStorage(input: $input) {
+    id
+  }
+}

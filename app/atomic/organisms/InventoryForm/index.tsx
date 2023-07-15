@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { NumberField } from '@app/atomic/molecules/numberField'
+import { NumberField } from '@app/atomic/molecules/NumberField'
 import SelectField from '@app/atomic/molecules/SelectField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
 import { pxToRem } from '@app/common/theme/utils'
 import useListFields from '@app/features/fields/hooks/useListField'
+import useListStorages from '@app/features/storage/hooks/useListStorages'
 import { Button, Flex, Grid } from '@chakra-ui/react'
 
 interface InventoryFormProps {
@@ -25,6 +26,8 @@ export const InventoryForm = React.memo(
     )
 
     const { data: fieldsData } = useListFields()
+    const { data: storagesData } = useListStorages()
+
     return (
       <Flex flexDir="column" width="100%">
         <Grid
@@ -44,6 +47,23 @@ export const InventoryForm = React.memo(
             isDisabled={initialValues?.field?.id ? true : false}
           >
             {fieldsData?.fields?.nodes?.map((value) => (
+              <option key={value.id} value={value.id}>
+                {value.name}
+              </option>
+            ))}
+          </SelectField>
+          <SelectField
+            name="storages"
+            label="Armazém:"
+            placeholder="Selecione um armazém"
+            value={
+              initialValues?.storage?.id
+                ? initialValues?.storage?.id
+                : null
+            }
+            isDisabled={initialValues?.storage?.id ? true : false}
+          >
+            {storagesData?.storages?.nodes?.map((value) => (
               <option key={value.id} value={value.id}>
                 {value.name}
               </option>
@@ -80,22 +100,6 @@ export const InventoryForm = React.memo(
               borderColor: 'rgba(0,0,0,0.05)',
             }}
           />
-          <TextField
-            w="100%"
-            label="Armazem"
-            name="storage"
-            placeholder="Silo 1"
-            type="string"
-            labelProps={{ color: 'boulder' }}
-            inputProps={{
-              color: 'boulder',
-              size: 'md',
-              shadow: 'md',
-              borderRadius: '10px',
-              border: '1px solid',
-              borderColor: 'rgba(0,0,0,0.05)',
-            }}
-          />
           <NumberField
             name="amount"
             type="number"
@@ -103,7 +107,6 @@ export const InventoryForm = React.memo(
           />
           <NumberField name="value" type="number" label="Valor" />
         </Grid>
-
         <Flex>
           <Button
             onClick={handleOnClose}

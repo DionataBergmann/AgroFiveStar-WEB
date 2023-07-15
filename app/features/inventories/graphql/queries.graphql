@@ -7,12 +7,15 @@ query getInventories(
     nodes {
       id
       name
-      storage
       provider
       amount
       value
       createdAt
       fields {
+        id
+        name
+      }
+      storages {
         id
         name
       }

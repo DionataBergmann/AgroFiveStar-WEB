@@ -9,3 +9,13 @@ fragment MeFields on User {
   name
   email
 }
+
+query getUsers($filter: UserFilter!, $paging: OffsetPaging) {
+  users(filter: $filter, paging: $paging) {
+    nodes {
+      id
+      name
+      CPF
+    }
+  }
+}
