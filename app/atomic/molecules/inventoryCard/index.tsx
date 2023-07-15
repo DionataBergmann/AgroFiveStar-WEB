@@ -49,10 +49,11 @@ export const InventoryCard: React.FC<Props> = ({
 
     onEdit()
   }
+
   const FormatValue = ({ value }) => {
     return (
       <Text fontSize="sm">
-        {value.toLocaleString('pt-br', {
+        {value?.toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL',
         })}
@@ -97,7 +98,7 @@ export const InventoryCard: React.FC<Props> = ({
             {data?.name}
           </Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
-            {data?.storage}
+            {storage?.name}
           </Text>
           <Text color="gray.700" fontWeight="normal" fontSize="sm">
             {data?.provider}

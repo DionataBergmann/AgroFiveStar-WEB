@@ -17,6 +17,7 @@ import { useField, UseFieldConfig } from 'react-final-form'
 export type TextFieldProps = {
   name: string
   label?: string
+  placeholder?: string
   labelProps?: FormLabelProps
   numberInputProps?: NumberInputProps
   inputProps?: NumberInputFieldProps
@@ -29,6 +30,7 @@ export type TextFieldProps = {
   styledLabel?: any
   textLabel?: string
   hasLabel?: boolean
+  value?: any
   config?: UseFieldConfig<any>
   formatValue?: (value) => void
 } & BoxProps
@@ -37,11 +39,13 @@ export const NumberField = memo(
   ({
     name,
     label,
+    placeholder,
     labelProps,
     numberInputProps,
     isRequired,
     inputProps,
     formatValue,
+    value,
     disabled = false,
     hasLabel = true,
     styledLabel = null,
@@ -77,7 +81,7 @@ export const NumberField = memo(
         <NumberInput
           size="md"
           {...input}
-          value={format(input.value)}
+          value={format(input.value) ? format(input.value) : value}
           onChange={(value) => {
             input.onChange(Number(value))
           }}
@@ -85,6 +89,7 @@ export const NumberField = memo(
           type={props.type}
         >
           <NumberInputField
+            placeholder={placeholder}
             color="boulder"
             borderRadius="10px"
             border="2px solid"

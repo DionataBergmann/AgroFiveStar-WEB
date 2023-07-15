@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { InventoryCard } from '@app/atomic/molecules/inventoryCard'
+import { InventoryCard } from '@app/atomic/molecules/InventoryCard'
 import { Modal } from '@app/atomic/molecules/Modal'
 import FormProvider from '@app/atomic/organisms/FormProvider'
 import { InventoryForm } from '@app/atomic/organisms/InventoryForm'
@@ -109,7 +109,7 @@ export const InventoriesTemplate = () => {
               name={item.name}
               provider={item.provider}
               amount={item.amount}
-              storage={item.storage}
+              storage={item.storages}
               value={item.value}
               field={item.fields}
               onEdit={handleEditInventory}

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 
 import { getYearFormat } from '@app/common/utils/getYearFormat'
+import useListFields from '@app/features/fields/hooks/useListField'
 import useListProductions from '@app/features/productions/hooks/useListProductions'
 import {
   Flex,
   Radio,
   RadioGroup,
+  Select as CSelect,
   Select,
   Stack,
 } from '@chakra-ui/react'
@@ -32,9 +34,19 @@ ChartJS.register(
 )
 
 export const LineChart = () => {
-  const { data: productionData } = useListProductions()
+  const [fieldId, setFieldId] = useState()
+  const { data: productionData, refetch } = useListProductions()
+  const { data: fieldData } = useListFields()
   const [listAsTon, setListAsTon] = useState(true)
   const [kilograms, setKilograms] = useState(50)
+
+  refetch({
+    filter: {
+      fields: {
+        id: { eq: fieldId },
+      },
+    },
+  })
 
   const options = {
     responsive: true,
@@ -114,7 +126,7 @@ export const LineChart = () => {
               (year) => getYearFormat(value?.createdAt) === year,
             )
               ? value?.amount
-              : null,
+              : 0,
           ),
         borderColor: '#efd72c80',
         backgroundColor: '#efd711',
@@ -129,7 +141,7 @@ export const LineChart = () => {
               (year) => getYearFormat(value?.createdAt) === year,
             )
               ? value?.amount
-              : null,
+              : 0,
           ),
         borderColor: '#eca84780',
         backgroundColor: '#eca847',
@@ -159,16 +171,28 @@ export const LineChart = () => {
           >
             Em sacas de
           </Radio>
-          <Select
+          <CSelect
             w="86px"
             size="sm"
             onChange={(value) => setKilograms(value?.target?.value)}
           >
             <option value="50">50 Kg</option>
             <option value="60">60 Kg</option>
+          </CSelect>
+          <Select
+            placeholder="Selecione um campo"
+            w={200}
+            h={8}
+            left={635}
+            onChange={(v) => setFieldId(v?.target?.value)}
+          >
+            {fieldData?.fields?.nodes?.map((value) => (
+              <option value={value?.id}>{value?.name}</option>
+            ))}
           </Select>
         </Stack>
       </RadioGroup>
+
       <Line
         style={{
           maxHeight: 300,
