@@ -16,7 +16,7 @@ export type GetFieldsQuery = (
     { __typename?: 'FieldConnection' }
     & { nodes: Array<(
       { __typename?: 'Field' }
-      & Pick<Types.Field, 'id' | 'name' | 'acre' | 'imagePath'>
+      & Pick<Types.Field, 'id' | 'name' | 'acre' | 'imagePath' | 'cordinates'>
       & { fieldImage?: Types.Maybe<(
         { __typename?: 'File' }
         & Pick<Types.File, 'id' | 'fileName' | 'filePath'>
@@ -34,6 +34,7 @@ export const GetFieldsDocument = gql`
       name
       acre
       imagePath
+      cordinates
       fieldImage {
         id
         fileName
