@@ -3,7 +3,10 @@ import { useToast } from '@chakra-ui/react'
 
 import { useUpdateOneFieldMutation } from '../graphql/mutations.generated'
 
-export default function useUpdateOneField({ refetch }, file) {
+export default function useUpdateOneField(
+  { refetch },
+  polygonCoordinates,
+) {
   const toast = useToast()
 
   const [mutate, updatedField] = useUpdateOneFieldMutation({
@@ -13,7 +16,7 @@ export default function useUpdateOneField({ refetch }, file) {
   interface UpdateOneFieldProps {
     id: string
     name: string
-    acre: number
+    acre: string
   }
 
   async function updateOneField(input: UpdateOneFieldProps) {
@@ -26,7 +29,7 @@ export default function useUpdateOneField({ refetch }, file) {
           data: {
             name,
             acre,
-            imagePath: file?.source,
+            cordinates: JSON.stringify(polygonCoordinates),
           },
         },
       })

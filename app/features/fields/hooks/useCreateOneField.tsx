@@ -4,7 +4,7 @@ import { useToast } from '@chakra-ui/react'
 import { useCreateOneFieldMutation } from '../graphql/mutations.generated'
 import { InputFieldProps } from '../helper'
 
-export default function useCreateField(file) {
+export default function useCreateField(file, polygonCoordinates) {
   const toast = useToast()
 
   const [createOneFieldMutation, { data: createdField }] =
@@ -21,10 +21,8 @@ export default function useCreateField(file) {
           data: {
             name,
             acre,
-            imagePath: file?.source,
+            cordinates: JSON.stringify(polygonCoordinates),
           },
-
-          fieldImage: file?.file,
         },
       })
 

@@ -9,6 +9,7 @@ query getFields(
       name
       acre
       imagePath
+      cordinates
       fieldImage {
         id
         fileName

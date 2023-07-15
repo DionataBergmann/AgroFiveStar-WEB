@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { NumberField } from '@app/atomic/molecules/numberField'
+import { NumberField } from '@app/atomic/molecules/NumberField'
 import SelectField from '@app/atomic/molecules/SelectField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
