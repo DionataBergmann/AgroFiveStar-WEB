@@ -25,10 +25,12 @@ export type TextFieldProps = {
   type?: string
   isRequired?: boolean
   errorFieldName?: string
+  placeholder?: string
   config?: UseFieldConfig<any>
   hasLabel?: boolean
   textArea?: boolean
   dateField?: boolean
+  value?: string
 } & BoxProps
 
 export const TextField = memo(
@@ -41,6 +43,8 @@ export const TextField = memo(
     hasLabel = true,
     textArea,
     dateField,
+    placeholder,
+    value,
     ...props
   }: TextFieldProps) => {
     const [startDate, setStartDate] = useState()
@@ -59,7 +63,7 @@ export const TextField = memo(
           w="120%"
           alignItems="center"
         >
-          {!value && (
+          {!startDate && !value && (
             <Flex
               px="5px"
               alignItems="center"
@@ -72,7 +76,7 @@ export const TextField = memo(
               </Text>
             </Flex>
           )}
-          {simpleDateFormat(value)}
+          {value && simpleDateFormat(value)}
         </Flex>
       ),
     )
@@ -98,11 +102,13 @@ export const TextField = memo(
             color="boulder"
             size="md"
             borderRadius="10px"
+            placeholder={placeholder}
             border="2px solid"
             maxLength={maximumOfletters}
             borderColor="rgba(0,0,0,0.05)"
             {...input}
             type={props.type}
+            value={input.value ? input.value : value}
           />
         )}
         {textArea && !dateField && (
@@ -127,7 +133,7 @@ export const TextField = memo(
               selected={startDate}
               locale="ptBR"
               dateFormat="dd/MM/yyyy"
-              customInput={<ExampleCustomInput />}
+              customInput={<ExampleCustomInput value={startDate} />}
               {...input}
             />
           </>

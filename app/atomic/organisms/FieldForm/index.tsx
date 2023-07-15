@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { NumberField } from '@app/atomic/molecules/numberField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
 import { pxToRem } from '@app/common/theme/utils'
-import { Button, Flex, Grid, Image } from '@chakra-ui/react'
-import { useFileUpload } from 'use-file-upload'
+import { Button, Flex, Grid } from '@chakra-ui/react'
+
+import { GoogleMaps } from '../GoogleMaps'
 
 interface FieldFormProps {
   handleOnClose?: () => void
   isEditForm?: boolean
   setFile?: any
   initialValues?: any
+  setPolygonCoordinates?: any
 }
 
 export const FieldForm = React.memo(
@@ -20,22 +21,20 @@ export const FieldForm = React.memo(
     isEditForm,
     setFile,
     initialValues,
+    setPolygonCoordinates,
   }: FieldFormProps) => {
     const handleSubmit: () => void = useFormContextSelector(
       (s) => s.handleSubmit,
     )
-    const [files, selectFiles] = useFileUpload()
-    setFile(files)
 
-    const defaultSrc =
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQT40BuNQFOItdDuxw2UHq2Kdz5-OsTWIkQFlPRts&s'
+    const [defaultAcreValue, setDefaultAcreValue] = useState(0)
 
     return (
       <Flex flexDir="column" width="100%">
         <Grid
           templateColumns={['1fr', 'repeat(2, 1fr)']}
           gap={6}
-          mb={pxToRem(30)}
+          mb={pxToRem(10)}
         >
           <TextField
             w="100%"
@@ -52,32 +51,22 @@ export const FieldForm = React.memo(
               borderColor: 'rgba(0,0,0,0.05)',
             }}
           />
-          <NumberField name="acre" type="number" label="Hectares" />
+          <TextField
+            name="acre"
+            type="text"
+            label="Hectares"
+            value={defaultAcreValue?.toFixed(1)}
+          />
         </Grid>
 
-        <Flex flexDir="column" alignItems="center">
-          <Image
-            src={
-              files?.source || initialValues?.imagePath || defaultSrc
-            }
-            alt="image"
-            h={150}
-            w={300}
-            mb={5}
-          />
-          <Button
-            onClick={() =>
-              selectFiles(
-                { accept: 'image/*' },
-                ({ source, file }) => { },
-              )
-            }
-          >
-            Escolher arquivo
-          </Button>
-        </Flex>
+        <GoogleMaps
+          setPolygonCoordinates={setPolygonCoordinates}
+          setDefaultAcreValue={setDefaultAcreValue}
+          initialValues={initialValues}
+          isEditForm={isEditForm}
+        />
 
-        <Flex mt="50px">
+        <Flex position="absolute" bottom="-12px" right="5%">
           <Button
             onClick={handleOnClose}
             size="md"
@@ -99,7 +88,7 @@ export const FieldForm = React.memo(
             borderRadius={pxToRem(5)}
             w="auto"
             mb={pxToRem(30)}
-            ml="auto"
+            ml="12px"
             _hover={{ bg: '#53754a' }}
           >
             {isEditForm ? 'Salvar' : 'Cadastrar'}

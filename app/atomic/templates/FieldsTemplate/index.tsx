@@ -28,12 +28,17 @@ export const FieldsTemplate = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [isEditForm, setIsEditForm] = useState(false)
+  const [polygonCoordinates, setPolygonCoordinates] =
+    React.useState(null)
 
   const { data, loading, refetch } = useListFields()
 
   const [file, setFile] = useState<File>()
-  const { createField } = useCreateField(file)
-  const { updateOneField } = useUpdateOneField({ refetch }, file)
+  const { createField } = useCreateField(file, polygonCoordinates)
+  const { updateOneField } = useUpdateOneField(
+    { refetch },
+    polygonCoordinates,
+  )
   const { removeField } = useDeleteOneField()
 
   function handleCloseFieldModal() {
@@ -86,6 +91,7 @@ export const FieldsTemplate = () => {
               id={value.id}
               name={value.name}
               acre={value.acre}
+              cordinates={value?.cordinates}
               imagePath={value?.imagePath}
               onEdit={handleEditField}
               onDelete={removeField}
@@ -99,15 +105,16 @@ export const FieldsTemplate = () => {
           isOpen={modalIsOpen}
           onClose={handleCloseFieldModal}
           title={isEditForm ? 'Editar Área' : 'Cadastrar Área'}
-          size="2xl"
           closable
           isCentered
+          size="6xl"
         >
           <FieldForm
             handleOnClose={handleCloseFieldModal}
             isEditForm={isEditForm}
             setFile={setFile}
             initialValues={initialValues}
+            setPolygonCoordinates={setPolygonCoordinates}
           />
         </Modal>
       </LayoutTemplate>
