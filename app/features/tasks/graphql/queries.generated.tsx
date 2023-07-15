@@ -16,7 +16,7 @@ export type GetTasksQuery = (
     { __typename?: 'TaskConnection' }
     & { nodes: Array<(
       { __typename?: 'Task' }
-      & Pick<Types.Task, 'id' | 'title' | 'description' | 'date' | 'dayOfWeek' | 'createdAt'>
+      & Pick<Types.Task, 'id' | 'title' | 'description' | 'date' | 'dayOfWeek' | 'createdAt' | 'userName'>
     )> }
   ) }
 );
@@ -30,7 +30,7 @@ export type ListUsersQuery = (
     { __typename?: 'UserConnection' }
     & { nodes: Array<(
       { __typename?: 'User' }
-      & Pick<Types.User, 'id' | 'name'>
+      & Pick<Types.User, 'id' | 'name' | 'CPF'>
     )> }
   ) }
 );
@@ -46,6 +46,7 @@ export const GetTasksDocument = gql`
       date
       dayOfWeek
       createdAt
+      userName
     }
   }
 }
@@ -86,6 +87,7 @@ export const ListUsersDocument = gql`
     nodes {
       id
       name
+      CPF
     }
   }
 }

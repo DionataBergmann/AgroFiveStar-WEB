@@ -12,7 +12,11 @@ export type CreateOneInventoryMutation = (
   { __typename?: 'Mutation' }
   & { createOneInventory: (
     { __typename?: 'Inventory' }
-    & Pick<Types.Inventory, 'id' | 'name' | 'storage' | 'provider' | 'amount' | 'value'>
+    & Pick<Types.Inventory, 'id' | 'name' | 'provider' | 'amount' | 'value'>
+    & { storages?: Types.Maybe<(
+      { __typename?: 'Storage' }
+      & Pick<Types.Storage, 'id' | 'name'>
+    )> }
   ) }
 );
 
@@ -49,7 +53,10 @@ export const CreateOneInventoryDocument = gql`
   createOneInventory(input: {inventory: $inventory}) {
     id
     name
-    storage
+    storages {
+      id
+      name
+    }
     provider
     amount
     value

@@ -1,8 +1,8 @@
 import { BsBook, BsHouse } from 'react-icons/bs'
-import { FaTasks } from 'react-icons/fa'
+import { FaTasks, FaWarehouse } from 'react-icons/fa'
 import { FiBox } from 'react-icons/fi'
+import { HiDocumentReport } from 'react-icons/hi'
 import { IoIosFlower } from 'react-icons/io'
-import { HiDocumentReport } from "react-icons/hi";
 
 export const menuItems = [
   {
@@ -14,6 +14,11 @@ export const menuItems = [
     label: 'Áreas',
     href: '/areas',
     icon: BsBook,
+  },
+  {
+    label: 'Silos',
+    href: '/silos',
+    icon: FaWarehouse,
   },
   {
     label: 'Tarefas',

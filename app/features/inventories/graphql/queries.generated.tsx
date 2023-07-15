@@ -16,10 +16,13 @@ export type GetInventoriesQuery = (
     { __typename?: 'InventoryConnection' }
     & { nodes: Array<(
       { __typename?: 'Inventory' }
-      & Pick<Types.Inventory, 'id' | 'name' | 'storage' | 'provider' | 'amount' | 'value' | 'createdAt'>
+      & Pick<Types.Inventory, 'id' | 'name' | 'provider' | 'amount' | 'value' | 'createdAt'>
       & { fields?: Types.Maybe<(
         { __typename?: 'Field' }
         & Pick<Types.Field, 'id' | 'name'>
+      )>, storages?: Types.Maybe<(
+        { __typename?: 'Storage' }
+        & Pick<Types.Storage, 'id' | 'name'>
       )> }
     )> }
   ) }
@@ -32,12 +35,15 @@ export const GetInventoriesDocument = gql`
     nodes {
       id
       name
-      storage
       provider
       amount
       value
       createdAt
       fields {
+        id
+        name
+      }
+      storages {
         id
         name
       }

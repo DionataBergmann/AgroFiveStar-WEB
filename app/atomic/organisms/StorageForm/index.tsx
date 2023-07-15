@@ -1,28 +1,30 @@
 import React from 'react'
 
-import SelectField from '@app/atomic/molecules/SelectField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
 import { pxToRem } from '@app/common/theme/utils'
-import useListUsers from '@app/features/tasks/hooks/useListUsers'
 import { Button, Flex, Grid } from '@chakra-ui/react'
 import ptBR from 'date-fns/locale/pt-BR'
 import { registerLocale } from 'react-datepicker'
 
-interface TaskFormProps {
+interface StorageFormProps {
   handleOnClose?: () => void
   isEditForm?: boolean
   initialValues?: any
 }
 registerLocale('ptBR', ptBR)
 
-export const TaskForm = React.memo(
-  ({ handleOnClose, isEditForm, initialValues }: TaskFormProps) => {
+export const StorageForm = React.memo(
+  ({
+    handleOnClose,
+    isEditForm,
+    initialValues,
+  }: StorageFormProps) => {
     const handleSubmit: () => void = useFormContextSelector(
       (s) => s.handleSubmit,
     )
 
-    const { data: usersData } = useListUsers()
+    // const { data: usersData } = useListUsers()
 
     return (
       <Flex flexDir="column" width="100%">
@@ -33,8 +35,8 @@ export const TaskForm = React.memo(
         >
           <TextField
             w="100%"
-            label="Título"
-            name="title"
+            label="Nome"
+            name="name"
             type="text"
             inputProps={{
               color: 'boulder',
@@ -45,29 +47,6 @@ export const TaskForm = React.memo(
               borderColor: 'rgba(0,0,0,0.05)',
             }}
           />
-          <TextField
-            textArea={true}
-            w="100%"
-            label="Descrição"
-            name="description"
-            type="text"
-          />
-          <SelectField
-            name="userName"
-            label="Funcionário:"
-            placeholder="Selecione um funcionário"
-            value={
-              initialValues?.userName ? initialValues?.userName : null
-            }
-            isDisabled={initialValues?.field?.id ? true : false}
-          >
-            {usersData?.users?.nodes?.map((value) => (
-              <option key={value.id} value={value?.CPF}>
-                {value.name}
-              </option>
-            ))}
-          </SelectField>
-          <TextField dateField={true} label="Data" name="date" />
         </Grid>
         <Flex>
           <Button

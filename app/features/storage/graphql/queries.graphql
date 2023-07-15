@@ -1,0 +1,17 @@
+query getStorages(
+  $filter: StorageFilter
+  $sorting: [StorageSort!]
+  $paging: OffsetPaging
+) {
+  storages(filter: $filter, sorting: $sorting, paging: $paging) {
+    nodes {
+      id
+      name
+      amount
+      inventories {
+        name
+        amount
+      }
+    }
+  }
+}

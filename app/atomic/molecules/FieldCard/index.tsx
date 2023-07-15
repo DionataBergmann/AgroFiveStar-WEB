@@ -12,7 +12,8 @@ export type FieldCardProps = {
   data: News
   id?: string
   name: string
-  acre: number
+  acre: string
+  cordinates: string
   fieldImage: any
   imagePath: string
   onEdit?: any
@@ -25,6 +26,7 @@ export const FieldCard: React.FC<FieldCardProps> = ({
   data,
   name,
   acre,
+  cordinates,
   fieldImage,
   imagePath,
   onEdit,
@@ -36,6 +38,7 @@ export const FieldCard: React.FC<FieldCardProps> = ({
       id: id,
       name: name,
       acre: acre,
+      cordinates: cordinates,
       fieldImage: fieldImage?.filePath,
       imagePath: imagePath,
     })
@@ -55,6 +58,7 @@ export const FieldCard: React.FC<FieldCardProps> = ({
       <FieldCardText
         title={name}
         acre={acre}
+        cordinates={cordinates}
         fieldImage={fieldImage}
         imagePath={imagePath}
       />

@@ -11,6 +11,7 @@ query getTasks(
       date
       dayOfWeek
       createdAt
+      userName
     }
   }
 }
@@ -20,6 +21,7 @@ query listUsers {
     nodes {
       id
       name
+      CPF
     }
   }
 }

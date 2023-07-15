@@ -2,13 +2,19 @@ mutation createOneInventory($inventory: CreateInventoryInput!) {
   createOneInventory(input: { inventory: $inventory }) {
     id
     name
-    storage
+    storages {
+      id
+      name
+    }
     provider
     amount
     value
   }
 }
-mutation updateOneInventory($id: ID!, $inventory: UpdateInventoryInput!) {
+mutation updateOneInventory(
+  $id: ID!
+  $inventory: UpdateInventoryInput!
+) {
   updateOneInventory(input: { id: $id, update: $inventory }) {
     id
   }

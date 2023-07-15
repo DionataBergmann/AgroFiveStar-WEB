@@ -1,7 +1,8 @@
 export type InputFieldProps = {
   id: string | null
   name: string
-  acre: number
+  acre: string
+  cordinates: string
   fieldImage: any
   imagePath: string
 }

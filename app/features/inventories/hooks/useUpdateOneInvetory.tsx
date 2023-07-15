@@ -21,7 +21,7 @@ export default function useUpdateOneInventory({ refetch }) {
   }
 
   async function updateOneInventory(input: UpdateOneInventoryProps) {
-    const { id, name, amount, provider, storage, value, fields } =
+    const { id, name, amount, provider, value, fields, storages } =
       input
 
     try {
@@ -32,10 +32,12 @@ export default function useUpdateOneInventory({ refetch }) {
             name,
             amount,
             provider,
-            storage,
             value,
             fields: {
               id: input.fields,
+            },
+            storages: {
+              id: input.storages,
             },
           },
         },
