@@ -1,5 +1,14 @@
-// import { GetServerSideProps } from 'next'
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-export default function Index() {
-  return <></>
-}
+const Home = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/login');
+  }, [router]);
+
+  return null; 
+};
+
+export default Home;
