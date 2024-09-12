@@ -1,29 +1,34 @@
 import React from 'react'
 
-import SelectField from '@app/atomic/molecules/SelectField'
 import { TextField } from '@app/atomic/molecules/TextField'
 import { useFormContextSelector } from '@app/atomic/organisms/FormProvider'
 import { pxToRem } from '@app/common/theme/utils'
-import useListUsers from '@app/features/tasks/hooks/useListUsers'
 import { Button, Flex, Grid } from '@chakra-ui/react'
 import ptBR from 'date-fns/locale/pt-BR'
 import { registerLocale } from 'react-datepicker'
+import SelectField from '@app/atomic/molecules/SelectField'
+import useListUsers from '@app/features/tasks/hooks/useListUsers'
 
-interface TaskFormProps {
+interface NotificationFormProps {
   handleOnClose?: () => void
   isEditForm?: boolean
   initialValues?: any
 }
 registerLocale('ptBR', ptBR)
 
-export const TaskForm = React.memo(
-  ({ handleOnClose, isEditForm, initialValues }: TaskFormProps) => {
+export const NotificationForm = React.memo(
+  ({
+    handleOnClose,
+    isEditForm,
+    initialValues,
+  }: NotificationFormProps) => {
     const handleSubmit: () => void = useFormContextSelector(
       (s) => s.handleSubmit,
     )
 
     const { data: usersData } = useListUsers()
-  
+    const { data: UserfilteredData } = useListUsers(initialValues?.userId)
+
     return (
       <Flex flexDir="column" width="100%">
         <Grid
@@ -33,7 +38,7 @@ export const TaskForm = React.memo(
         >
           <TextField
             w="100%"
-            label="Título"
+            label="Titulo"
             name="title"
             type="text"
             inputProps={{
@@ -45,21 +50,27 @@ export const TaskForm = React.memo(
               borderColor: 'rgba(0,0,0,0.05)',
             }}
           />
-          <TextField
-            textArea={true}
+           <TextField
             w="100%"
             label="Descrição"
             name="description"
             type="text"
+            inputProps={{
+              color: 'boulder',
+              size: 'md',
+              shadow: 'md',
+              borderRadius: '10px',
+              border: '1px solid',
+              borderColor: 'rgba(0,0,0,0.05)',
+            }}
           />
           <SelectField
             name="userId"
             label="Funcionário:"
             placeholder="Selecione um funcionário"
             value={
-              initialValues?.userId ? initialValues?.userId : null
+              UserfilteredData?.users?.nodes?.[0]?.id ? UserfilteredData?.users?.nodes?.[0]?.id : null
             }
-            isDisabled={initialValues?.field?.id ? true : false}
           >
             {usersData?.users?.nodes?.map((value) => (
               <option key={value.id} value={value?.id}>
@@ -67,7 +78,6 @@ export const TaskForm = React.memo(
               </option>
             ))}
           </SelectField>
-          <TextField dateField={true} label="Data" name="date" />
         </Grid>
         <Flex>
           <Button

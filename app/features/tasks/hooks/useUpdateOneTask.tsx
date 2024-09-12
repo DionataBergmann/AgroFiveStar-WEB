@@ -1,5 +1,6 @@
 import { catchError } from '@app/common/errors/catch-and-toast-error'
 import { useToast } from '@chakra-ui/react'
+import moment from 'moment'
 
 import { useUpdateOneTaskMutation } from '../graphql/mutation.generated'
 
@@ -15,11 +16,14 @@ export default function useUpdateOneTask({ refetch }) {
     title: string
     description: string
     userName: string
+    userId?: string
     date: Date
   }
 
   async function updateOneTask(input: UpdateOneTaskProps) {
-    const { id, title, description, date, userName } = input
+    const { id, title, description, date, userName, userId } = input
+
+    const dayOfWeek = moment(date).weekday()
 
     try {
       const { data: updatedTask } = await mutate({
@@ -28,8 +32,10 @@ export default function useUpdateOneTask({ refetch }) {
           task: {
             title,
             description,
+            dayOfWeek,
             userName,
             date,
+            userId
           },
         },
       })

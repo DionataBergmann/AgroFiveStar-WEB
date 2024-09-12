@@ -3,4 +3,5 @@ export const colors = {
   secundary: '#FFFFFF',
   tertiary: '#324d2c',
   white: '#FFFFFF',
+  vividOrange: '#FABD0D',
 }

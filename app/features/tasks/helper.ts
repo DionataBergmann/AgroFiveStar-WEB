@@ -4,4 +4,5 @@ export type InputTaskProps = {
   description: string
   date?: Date
   userName?: string
+  userId?: string
 }

@@ -16,12 +16,14 @@ export type GetTasksQuery = (
     { __typename?: 'TaskConnection' }
     & { nodes: Array<(
       { __typename?: 'Task' }
-      & Pick<Types.Task, 'id' | 'title' | 'description' | 'date' | 'dayOfWeek' | 'createdAt' | 'userName'>
+      & Pick<Types.Task, 'id' | 'title' | 'description' | 'date' | 'dayOfWeek' | 'createdAt' | 'userName' | 'status' | 'userId'>
     )> }
   ) }
 );
 
-export type ListUsersQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type ListUsersQueryVariables = Types.Exact<{
+  filter?: Types.Maybe<Types.UserFilter>;
+}>;
 
 
 export type ListUsersQuery = (
@@ -47,6 +49,8 @@ export const GetTasksDocument = gql`
       dayOfWeek
       createdAt
       userName
+      status
+      userId
     }
   }
 }
@@ -82,8 +86,8 @@ export type GetTasksQueryHookResult = ReturnType<typeof useGetTasksQuery>;
 export type GetTasksLazyQueryHookResult = ReturnType<typeof useGetTasksLazyQuery>;
 export type GetTasksQueryResult = Apollo.QueryResult<GetTasksQuery, GetTasksQueryVariables>;
 export const ListUsersDocument = gql`
-    query listUsers {
-  users {
+    query listUsers($filter: UserFilter) {
+  users(filter: $filter) {
     nodes {
       id
       name
@@ -105,6 +109,7 @@ export const ListUsersDocument = gql`
  * @example
  * const { data, loading, error } = useListUsersQuery({
  *   variables: {
+ *      filter: // value for 'filter'
  *   },
  * });
  */
