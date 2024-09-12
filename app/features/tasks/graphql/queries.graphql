@@ -12,12 +12,14 @@ query getTasks(
       dayOfWeek
       createdAt
       userName
+      status
+      userId
     }
   }
 }
 
-query listUsers {
-  users {
+query listUsers($filter: UserFilter) {
+  users(filter: $filter) {
     nodes {
       id
       name
