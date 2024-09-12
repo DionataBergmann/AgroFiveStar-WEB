@@ -10,12 +10,15 @@ import {
   Icon,
   Image,
   Text,
+  theme,
 } from '@chakra-ui/react'
 import { addDays } from 'date-fns'
 import moment from 'moment'
 import { GrUserWorker } from 'react-icons/gr'
 
 import { setWeek } from './setWeek'
+import { FaCheckCircle, FaRegClock } from 'react-icons/fa'
+import { TaskStatus } from '@app/generated/graphql'
 
 type Props = {
   handleEditTask?: any
@@ -67,6 +70,7 @@ export const WeekScheduleTable: React.FC<Props> = ({
       id: values?.value?.id,
       title: values?.value?.title,
       description: values?.value?.description,
+      userId: values?.value?.userId,
       userName: values?.value?.userName,
       date: values?.value?.date,
     })
@@ -77,10 +81,21 @@ export const WeekScheduleTable: React.FC<Props> = ({
   const TaskCard = (value) => {
     let user = ''
     usersData?.users?.nodes?.map((item) => {
-      if (item?.CPF === value?.value?.userName) {
+      if (item?.id === value?.value?.userId) {
         user = item?.name
       }
     })
+
+    const getStatusIcon = (status) => {
+      if (status === TaskStatus?.Done) {
+        return <Icon as={FaCheckCircle} color="primary" />;
+      }
+      return <Icon as={FaRegClock} color="vividOrange" />;
+    };
+
+    const getStatusText = (status) => {
+      return status === TaskStatus?.Done ? 'Concluída' : 'Pendente';
+    };
 
     return (
       <Flex
@@ -137,9 +152,27 @@ export const WeekScheduleTable: React.FC<Props> = ({
               {user}
             </Text>
           </Flex>
+
+          <Flex
+            flexDir="row"
+            justifyContent="center"
+            alignItems="center"
+            mt="5px"
+          >
+            {getStatusIcon(value?.value?.status)}
+            <Text
+              fontSize="12px"
+              lineHeight="15.96px"
+              fontWeight="400"
+              textAlign="center"
+              ml="5px"
+            >
+              {getStatusText(value?.value?.status)}
+            </Text>
+          </Flex>
         </Flex>
       </Flex>
-    )
+    );
   }
 
   return (
