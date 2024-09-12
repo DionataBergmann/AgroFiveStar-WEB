@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useState } from 'react'
+import React, { forwardRef, memo, useEffect, useState } from 'react'
 
 import { simpleDateFormat } from '@app/common/utils/simpleFormat'
 import {
@@ -47,39 +47,10 @@ export const TextField = memo(
     value,
     ...props
   }: TextFieldProps) => {
-    const [startDate, setStartDate] = useState()
+    const [startDate, setStartDate] = useState(new Date())
     const { input, meta } = useField(name, {})
 
     registerLocale('ptBR', ptBR)
-
-    const ExampleCustomInput = forwardRef(
-      ({ value, onClick }: any, ref: any) => (
-        <Flex
-          onClick={onClick}
-          ref={ref}
-          p="10px 5px"
-          cursor="pointer"
-          h="38px"
-          w="120%"
-          alignItems="center"
-        >
-          {!startDate && !value && (
-            <Flex
-              px="5px"
-              alignItems="center"
-              w="100%"
-              h="100%"
-              pos="absolute"
-            >
-              <Text mt="4px" color="gray.400">
-                DD/MM/AAAA
-              </Text>
-            </Flex>
-          )}
-          {value && simpleDateFormat(value)}
-        </Flex>
-      ),
-    )
 
     return (
       <FormControl
@@ -133,7 +104,8 @@ export const TextField = memo(
               selected={startDate}
               locale="ptBR"
               dateFormat="dd/MM/yyyy"
-              customInput={<ExampleCustomInput value={startDate} />}
+              onSelect={(date) => setStartDate(date)}
+              placeholderText={simpleDateFormat(new Date())} 
               {...input}
             />
           </>
