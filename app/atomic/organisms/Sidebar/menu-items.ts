@@ -3,6 +3,7 @@ import { FaTasks, FaWarehouse } from 'react-icons/fa'
 import { FiBox } from 'react-icons/fi'
 import { HiDocumentReport } from 'react-icons/hi'
 import { IoIosFlower } from 'react-icons/io'
+import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
 
 export const menuItems = [
   {
@@ -34,5 +35,10 @@ export const menuItems = [
     label: 'Produção',
     href: '/producao',
     icon: IoIosFlower,
+  },
+  {
+    label: 'Notificações',
+    href: '/notificacoes',
+    icon: IoChatbubbleEllipsesOutline,
   },
 ]
