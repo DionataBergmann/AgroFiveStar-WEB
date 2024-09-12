@@ -101,12 +101,14 @@ export const TextField = memo(
         {dateField && (
           <>
             <DatePicker
-              selected={startDate}
+              selected={input.value ? new Date(input.value) : startDate}
               locale="ptBR"
               dateFormat="dd/MM/yyyy"
-              onSelect={(date) => setStartDate(date)}
-              placeholderText={simpleDateFormat(new Date())} 
-              {...input}
+              onChange={(date) => {
+                setStartDate(date)  
+                input.onChange(date) 
+              }}
+              placeholderText={simpleDateFormat(new Date())}
             />
           </>
         )}
