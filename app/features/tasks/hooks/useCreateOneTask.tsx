@@ -15,7 +15,7 @@ export default function useCreateTask({ refetch }) {
 
   async function createOneTask(values: InputTaskProps) {
     try {
-      const { title, description, date, userName } = values
+      const { title, description, date, userName, userId } = values
 
       const dayOfWeek = moment(date).weekday()
 
@@ -27,6 +27,7 @@ export default function useCreateTask({ refetch }) {
             date,
             dayOfWeek,
             userName,
+            userId,
           },
         },
       })

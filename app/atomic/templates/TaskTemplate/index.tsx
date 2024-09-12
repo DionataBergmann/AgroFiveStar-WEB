@@ -18,7 +18,7 @@ export const TaskTemplate = () => {
     title: '',
     description: '',
     date: null,
-    userName: '',
+    userId: '',
   }
 
   const [initialValues, setInitialValues] = useState<InputTaskProps>(

@@ -23,7 +23,7 @@ export const TaskForm = React.memo(
     )
 
     const { data: usersData } = useListUsers()
-
+  
     return (
       <Flex flexDir="column" width="100%">
         <Grid
@@ -53,16 +53,16 @@ export const TaskForm = React.memo(
             type="text"
           />
           <SelectField
-            name="userName"
+            name="userId"
             label="Funcionário:"
             placeholder="Selecione um funcionário"
             value={
-              initialValues?.userName ? initialValues?.userName : null
+              initialValues?.userId ? initialValues?.userId : null
             }
             isDisabled={initialValues?.field?.id ? true : false}
           >
             {usersData?.users?.nodes?.map((value) => (
-              <option key={value.id} value={value?.CPF}>
+              <option key={value.id} value={value?.id}>
                 {value.name}
               </option>
             ))}

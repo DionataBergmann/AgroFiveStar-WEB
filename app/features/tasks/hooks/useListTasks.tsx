@@ -11,7 +11,7 @@ export default function useListTasks() {
     variables: {
       sorting: [
         {
-          field: TaskSortFields.CreatedAt,
+          field: TaskSortFields.UpdatedAt,
           direction: SortDirection.Asc,
           nulls: SortNulls.NullsLast,
         },
