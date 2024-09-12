@@ -21,8 +21,8 @@ export const Sidebar = () => {
       zIndex={20}
     >
       <Box align="center">
-        <Img w="100px" src="/assets/logo/logo.png" />
-        <Text color="secundary">Agro FiveStar</Text>
+        <Img w="300px" src="/assets/logo/logo_branca.png" />
+        <Text marginTop={-50} color="secundary" fontSize={20} fontWeight='bold'>Agro Assist</Text>
       </Box>
 
       <Box p={6}></Box>
