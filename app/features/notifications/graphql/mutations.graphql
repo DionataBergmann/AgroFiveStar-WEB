@@ -1,0 +1,16 @@
+mutation createOneNotification($input: CreateNotificationInput!) {
+  createOneNotification(input: { notification: $input }) {
+    id
+  }
+}
+mutation updateOneNotification($id: ID!, $notification: UpdateNotificationInput!) {
+  updateOneNotification(input: { id: $id, update: $notification }) {
+    id
+  }
+}
+
+mutation deleteOneNotification($input: DeleteOneNotificationInput!) {
+  deleteOneNotification(input: $input) {
+    id
+  }
+}

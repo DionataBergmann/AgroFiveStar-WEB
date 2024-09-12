@@ -1,0 +1,14 @@
+query getNotifications(
+  $filter: NotificationFilter
+  $sorting: [NotificationSort!]
+  $paging: OffsetPaging
+) {
+  notifications(filter: $filter, sorting: $sorting, paging: $paging) {
+    nodes {
+      id
+      title
+      description
+      userId
+    }
+  }
+}
