@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Changed name to Farm Assist
+Farm Assist is a web application developed with React and NestJS. This project was created to provide farm owners and managers with an efficient way to organize and monitor the daily activities of their employees. The web version allows owners to create and manage tasks in real-time as they are carried out by the employees. It also provides productivity reports on different areas and crops, grain storage management, and the creation of notifications for users. With a user-friendly interface, the system ensures a more productive and collaborative management of farm operations.
+
+# Demo
+[YouTube Video](https://www.youtube.com/watch?v=2xg57GKWMbU)
 
 ## Installation
 
