@@ -3,7 +3,7 @@ Farm Assist is a web application developed with React and NestJS. This project w
 
 # Demo
 
-[![Watch the video](https://img.youtube.com/vi/2w-L6wfVqJ8/maxresdefault.jpg)](https://www.youtube.com/watch?v=2w-L6wfVqJ8)
+[![Watch the video]([https://img.youtube.com/vi/2w-L6wfVqJ8/maxresdefault.jpg](https://img.youtube.com/vi/TQsoWcfyJ8o/maxresdefault.jpg))](https://www.youtube.com/watch?v=2w-L6wfVqJ8)
 
 ## Installation
 
